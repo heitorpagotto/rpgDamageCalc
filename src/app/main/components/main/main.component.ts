@@ -30,12 +30,12 @@ export class MainComponent {
   ];
 
   skillLevel = [
-    { name: 'Ataque Normal', id: 6 },
-    { name: 'Leve', id: 8 },
-    { name: 'Médio', id: 10 },
-    { name: 'Pesado', id: 12 },
-    { name: 'Mega', id: 16 },
-    { name: 'Severe', id: 24 },
+    { name: 'Ataque Normal (D6)', id: 6 },
+    { name: 'Leve (D8)', id: 8 },
+    { name: 'Médio (D10)', id: 10 },
+    { name: 'Pesado (D12)', id: 12 },
+    { name: 'Mega (D16)', id: 16 },
+    { name: 'Severe (D24)', id: 24 },
   ];
 
   isCrit = false;
@@ -45,31 +45,39 @@ export class MainComponent {
   buffs = [
     {
       id: 1,
-      name: 'Tarukaja/Makakaja (No Player)',
+      name: 'Tarukaja/Makakaja',
       selected: false,
       stacks: 1,
+      desc: 'Player (Atk+)',
     },
     {
       id: 2,
-      name: 'Rakukaja (No Inimigo)',
+      name: 'Rakukaja',
       selected: false,
       stacks: 1,
+      desc: 'Inimigo (Def+)',
     },
   ];
   debuffs = [
     {
       id: 1,
-      name: 'Tarunda (No Player)',
+      name: 'Tarunda',
       selected: false,
       stacks: 1,
+      desc: 'Player (Atk-)',
     },
     {
       id: 2,
-      name: 'Rakunda (No Inimigo)',
+      name: 'Rakunda',
       selected: false,
       stacks: 1,
+      desc: 'Inimigo (Def-)',
     },
   ];
+
+  setNewValidation(input: any, id: any): void {
+    input.max = id;
+  }
 
   calcDmg(): void {
     const val = this.selectedType.value;
