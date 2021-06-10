@@ -9,13 +9,13 @@ import { FormControl, Validators } from '@angular/forms';
 export class MainComponent {
   constructor() {}
   selectedType = new FormControl('', Validators.required);
-  selectedSkillLvl: any;
+  selectedSkillLvl = 2;
 
-  pLvl = 1;
+  pLvl = new FormControl('', [Validators.min(1), Validators.max(256)]);
 
-  pStat = 1;
+  pStat = new FormControl('', [Validators.min(1), Validators.max(40)]);
 
-  pHP = 1;
+  pHP = new FormControl('', [Validators.min(1), Validators.max(999)]);
 
   pSkillPow = 1;
 
@@ -30,12 +30,12 @@ export class MainComponent {
   ];
 
   skillLevel = [
-    { name: 'Ataque Normal', id: 1, maxNumb: '6' },
-    { name: 'Leve', id: 2, maxNumb: '8' },
-    { name: 'Médio', id: 3, maxNumb: '10' },
-    { name: 'Pesado', id: 4, maxNumb: '12' },
-    { name: 'Mega', id: 5, maxNumb: '16' },
-    { name: 'Severe', id: 6, maxNumb: '24' },
+    { name: 'Ataque Normal', id: 6 },
+    { name: 'Leve', id: 8 },
+    { name: 'Médio', id: 10 },
+    { name: 'Pesado', id: 12 },
+    { name: 'Mega', id: 16 },
+    { name: 'Severe', id: 24 },
   ];
 
   isCrit = false;
@@ -87,9 +87,9 @@ export class MainComponent {
   }
 
   calcPhys(): number {
-    const level = this.pLvl;
+    const level = this.pLvl.value;
     const skillPower = this.pSkillPow;
-    const playerStat = this.pStat;
+    const playerStat = this.pStat.value;
     const diceroll = this.diceNumb;
 
     let formula = ((level + playerStat) * skillPower) / 15 + diceroll;
@@ -115,9 +115,9 @@ export class MainComponent {
   }
 
   calcMag(): number {
-    const level = this.pLvl;
+    const level = this.pLvl.value;
     const skillPower = this.pSkillPow;
-    const playerStat = this.pStat;
+    const playerStat = this.pStat.value;
     const diceroll = this.diceNumb;
 
     let formula = ((level + playerStat) * skillPower) / 15 + diceroll;
@@ -143,9 +143,9 @@ export class MainComponent {
   }
 
   calcHpPhys(): number {
-    const playerHp = this.pHP;
+    const playerHp = this.pHP.value;
     const skillPower = this.pSkillPow;
-    const playerStat = this.pStat;
+    const playerStat = this.pStat.value;
     const diceroll = this.diceNumb;
 
     let formula = ((playerHp + diceroll + playerStat) * skillPower) / 50;
