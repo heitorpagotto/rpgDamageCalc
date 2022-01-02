@@ -43,13 +43,19 @@
 
 .section {
   border: 1px solid rgba(150, 150, 150, 0.25);
-  margin: 0.5rem;
   border-radius: 5px;
   width: 100%;
 }
 
 .item-row {
   display: flex;
+  flex-wrap: wrap;
+}
+
+.item-col {
+  display: flex;
+  padding: 0.5rem;
+  flex: 1;
 }
 
 @media screen and (max-width: 600px) {
