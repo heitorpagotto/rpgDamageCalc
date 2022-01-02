@@ -1,12 +1,34 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import "@angular/material/prebuilt-themes/purple-green.css";
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #303030;
+  color: white;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #303030; color: white;}
+@font-face {
+  font-family: "ShinMegamiTensei";
+  src: url("./assets/font/Megaten20XX.woff") format("woff");
+}
 
+.text-center {
+  text-align: center;
+}
 
+.p-1 {
+  padding: 1rem;
+}
 
-.mat-list-item-content {
-  justify-content: center;
+.flex-container {
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.align-items-center {
+  align-items: center;
 }

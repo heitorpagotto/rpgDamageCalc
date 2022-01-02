@@ -12,6 +12,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatMenuModule } from '@angular/material/menu';
+import { DialogRefComponent } from './components/dialogRef/dialogRef.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSliderModule } from '@angular/material/slider';
 
 const materialImports = [
   MatFormFieldModule,
@@ -22,10 +27,14 @@ const materialImports = [
   MatIconModule,
   MatListModule,
   MatTooltipModule,
+  MatTabsModule,
+  MatMenuModule,
+  MatDialogModule,
+  MatSliderModule,
 ];
 
 @NgModule({
-  declarations: [MainComponent],
+  declarations: [MainComponent, DialogRefComponent],
   imports: [
     CommonModule,
     MainRoutingModule,
