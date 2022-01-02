@@ -16,7 +16,12 @@ export class DialogRefComponent {
   constructor(public dialogRef: MatDialogRef<DialogRefComponent>) {
     const localConfig = localStorage.getItem('sound_enabled');
     if (localConfig === 'true') {
-      this.selectedOption = ['sound_enabled'];
+      this.selectedOption.push('sound_enabled');
+    }
+
+    const localAnimationConfig = localStorage.getItem('animations_disabled');
+    if (localAnimationConfig === 'true') {
+      this.selectedOption.push('animations_disabled');
     }
 
     const localVolume = localStorage.getItem('sound_volume');
@@ -24,10 +29,16 @@ export class DialogRefComponent {
   }
 
   onValueChange(event: string[]): void {
-    if (event[0] === 'sound_enabled') {
+    if (event.includes('sound_enabled')) {
       localStorage.setItem('sound_enabled', 'true');
     } else {
       localStorage.setItem('sound_enabled', 'false');
+    }
+
+    if (event.includes('animations_disabled')) {
+      localStorage.setItem('animations_disabled', 'true');
+    } else {
+      localStorage.setItem('animations_disabled', 'false');
     }
   }
 

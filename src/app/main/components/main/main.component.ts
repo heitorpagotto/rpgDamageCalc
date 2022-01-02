@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogRefComponent } from '../dialogRef/dialogRef.component';
@@ -45,6 +45,9 @@ export class MainComponent {
   ]);
 
   enemyQnty = new FormControl(1, [Validators.min(1), Validators.required]);
+
+  @ViewChild('damageOutput')
+  damageOutput!: ElementRef<HTMLElement>;
 
   pSkillPow = 1;
 
@@ -123,7 +126,12 @@ export class MainComponent {
 
   constructor(public dialog: MatDialog) {}
 
+  disabledAnimations(): boolean {
+    return localStorage.getItem('animations_disabled') === 'true';
+  }
+
   calcDmg(): void {
+    this.damageOutput.nativeElement.innerHTML = '';
     this.attackResults = '';
     this.isCrit = false;
 
@@ -140,6 +148,10 @@ export class MainComponent {
         sound = new Audio('../../../../assets/audio/atk.wav');
       }
 
+      if (accuracy === 'ok_weak') {
+        sound = new Audio('../../../../assets/audio/crit.wav');
+      }
+
       this.diceNumb = this.selectedSkillLvl;
 
       switch (val) {
@@ -153,8 +165,19 @@ export class MainComponent {
           this.attackResults += '-' + this.calcMag() + 'HP';
           break;
       }
+
+      const attackResultsDOM = document.createElement('p');
+      attackResultsDOM.classList.add('actual-damage');
+      if (!this.disabledAnimations()) {
+        attackResultsDOM.classList.add('dmg-animated');
+      }
+      attackResultsDOM.innerHTML = this.attackResults;
+
+      this.damageOutput.nativeElement.insertAdjacentElement(
+        'beforeend',
+        attackResultsDOM
+      );
     } else {
-      this.attackResults = 'Miss';
       sound = new Audio('../../../../assets/audio/miss.wav');
     }
 
@@ -332,38 +355,40 @@ export class MainComponent {
     const playerAgi = this.playerAgility.value;
     const playerLuc = this.playerLuck.value;
 
+    const playerAgiBuffValue = this.calcAgilityBuffAndDebuff();
+
     let result: AccuracyResult = 'ok';
 
     if (playerAgi <= 5) {
-      if (d20 < 10) {
+      if (d20 < 10 - playerAgiBuffValue) {
         result = 'miss';
       }
     } else if (playerAgi <= 10) {
-      if (d20 < 9) {
+      if (d20 < 9 - playerAgiBuffValue) {
         result = 'miss';
       }
     } else if (playerAgi <= 15) {
-      if (d20 < 8) {
+      if (d20 < 8 - playerAgiBuffValue) {
         result = 'miss';
       }
     } else if (playerAgi <= 20) {
-      if (d20 < 7) {
+      if (d20 < 7 - playerAgiBuffValue) {
         result = 'miss';
       }
     } else if (playerAgi <= 25) {
-      if (d20 < 6) {
+      if (d20 < 6 - playerAgiBuffValue) {
         result = 'miss';
       }
     } else if (playerAgi <= 30) {
-      if (d20 < 5) {
+      if (d20 < 5 - playerAgiBuffValue) {
         result = 'miss';
       }
     } else if (playerAgi <= 35) {
-      if (d20 < 4) {
+      if (d20 < 4 - playerAgiBuffValue) {
         result = 'miss';
       }
     } else if (playerAgi <= 40) {
-      if (d20 < 3) {
+      if (d20 < 3 - playerAgiBuffValue) {
         result = 'miss';
       }
     }
@@ -388,18 +413,33 @@ export class MainComponent {
       }
     }
 
+    if (this.isWeak) {
+      result = 'ok_weak';
+    }
+
     return result;
+  }
+
+  calcAgilityBuffAndDebuff(): number {
+    const selectedBuff = this.buffs.find((x) => x.id === 3 && x.selected);
+    const selectedDebuffs = this.debuffs.find((x) => x.id === 3 && x.selected);
+
+    let acutalAgiValue: number = 0;
+    if (selectedBuff) {
+      acutalAgiValue += selectedBuff.stacks * 2;
+    }
+    if (selectedDebuffs) {
+      acutalAgiValue -= selectedDebuffs.stacks * 2;
+    }
+
+    return acutalAgiValue;
   }
 
   openConfigDialog(): void {
     const dialogRef = this.dialog.open(DialogRefComponent, {
       width: '300px',
     });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-    });
   }
 }
 
-type AccuracyResult = 'miss' | 'critical' | 'ok';
+type AccuracyResult = 'miss' | 'critical' | 'ok' | 'ok_weak';

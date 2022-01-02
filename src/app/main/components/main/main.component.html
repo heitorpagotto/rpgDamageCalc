@@ -139,7 +139,7 @@
                     <mat-form-field appearance="legacy">
                       <mat-label>Stacks</mat-label>
                       <input [(ngModel)]="buff.stacks" [disabled]="!buff.selected" matInput type="number" max="2"
-                        min="1">
+                        min="0">
                     </mat-form-field>
                   </div>
                 </div>
@@ -161,7 +161,7 @@
                   <div class="input-margin" *ngIf="debuff.selected">
                     <mat-form-field appearance="legacy">
                       <mat-label>Stacks</mat-label>
-                      <input [(ngModel)]="debuff.stacks" matInput type="number" max="2" min="1">
+                      <input [(ngModel)]="debuff.stacks" matInput type="number" max="2" min="0">
                     </mat-form-field>
                   </div>
                 </div>
@@ -169,16 +169,23 @@
             </div>
           </div>
         </div>
-        <div class="p-1 text-center">
+        <div class="p-1 text-center" style="margin-bottom: 2rem;">
           <button mat-raised-button color="primary" (click)="calcDmg()">ATTACK</button>
         </div>
-        <div class="p-1">
-          <h2 class="damage-output">
-            <b>{{attackResults}}</b>
-          </h2>
-          <h1>
-            <b>CRITICAL</b>
-          </h1>
+        <div class="damage-output p-1">
+          <div #damageOutput>
+          </div>
+          <p *ngIf="accuracyResult === 'ok_weak'" class="weak-flavor-text"
+            [class.critical-animated]="!disabledAnimations()">
+            WEAK
+          </p>
+          <p class="miss-text" *ngIf="accuracyResult === 'miss'" [class.miss-text-animated]="!disabledAnimations()">
+            MISS
+          </p>
+          <p *ngIf="accuracyResult === 'critical'" class="critical-flavor-text"
+            [class.critical-animated]="!disabledAnimations()">
+            CRITICAL
+          </p>
         </div>
       </div>
     </mat-tab>

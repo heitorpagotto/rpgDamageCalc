@@ -32,3 +32,35 @@ body {
 .align-items-center {
   align-items: center;
 }
+
+.actual-damage {
+  font-size: 38px;
+  user-select: none;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+.dmg-animated {
+  animation: damageAnim 500ms cubic-bezier(0, 0, 0.19, 0.97) both;
+}
+
+@keyframes damageAnim {
+  10% {
+    transform: translate3d(0px, 0, 0) scale(0.5) rotate(-15deg);
+  }
+
+  20% {
+    transform: translate3d(0px, 0, 0) scale(0.8) rotate(-5deg);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-3px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(3px, 0, 0) scale(1) rotate(0);
+  }
+}

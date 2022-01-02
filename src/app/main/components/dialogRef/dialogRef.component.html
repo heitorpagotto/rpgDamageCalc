@@ -1,6 +1,12 @@
 <h1 mat-dialog-title>Website Settings</h1>
 <div mat-dialog-content>
   <mat-selection-list #opt [(ngModel)]="selectedOption" (ngModelChange)="onValueChange($event)">
+    <mat-list-option value="animations_disabled">
+      <div class="flex-container align-items-center" style="user-select: none;">
+        <mat-icon style="margin-right: 1rem;">motion_photos_off</mat-icon>
+        Disable Animations
+      </div>
+    </mat-list-option>
     <mat-list-option [value]="'sound_enabled'">
       <div class="flex-container align-items-center" style="user-select: none;">
         <mat-icon style="margin-right: 1rem;">volume_up</mat-icon>
@@ -8,7 +14,8 @@
       </div>
     </mat-list-option>
   </mat-selection-list>
-  <div class="flex-container flex-column p-1" style="margin-top: 1.5rem;" *ngIf="selectedOption.length > 0">
+  <div class="flex-container flex-column p-1" style="margin-top: 1.5rem;"
+    *ngIf="selectedOption.includes('sound_enabled')">
     <div class="flex-container align-items-center">
       <mat-icon style="margin-right: 1rem;">equalizer</mat-icon>
       <span>Volume</span>
