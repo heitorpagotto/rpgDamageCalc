@@ -11,6 +11,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 const materialImports = [
   MatFormFieldModule,
@@ -20,6 +21,7 @@ const materialImports = [
   MatButtonModule,
   MatIconModule,
   MatListModule,
+  MatTooltipModule,
 ];
 
 @NgModule({

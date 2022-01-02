@@ -17,8 +17,8 @@
     <div class="pad">
       <mat-form-field appearance="fill">
         <mat-label>Level da Skill</mat-label>
-        <mat-select [(value)]="selectedSkillLvl">
-          <mat-option *ngFor="let lvl of skillLevel" [value]="lvl.id">
+        <mat-select [(value)]="selectedSkillLvl" required>
+          <mat-option *ngFor="let lvl of skillLevel" [value]="lvl.id" (click)="setNewValidation(inputDice, lvl.id)">
             {{lvl.name}}
           </mat-option>
         </mat-select>
@@ -27,44 +27,57 @@
     <div class="pad" *ngIf="selectedType.value !== 2">
       <mat-form-field appearance="fill">
         <mat-label>Level</mat-label>
-        <input matInput type="number" [(ngModel)]="pLvl" max="255" min="1">
+        <input matInput type="number" [formControl]="pLvl" max="256" min="1" required>
+        <mat-error *ngIf="pLvl.hasError('max')">Level Máximo é 256.</mat-error>
+        <mat-error *ngIf="pLvl.hasError('required')">Este campo é Obrigatório.</mat-error>
       </mat-form-field>
     </div>
     <div class="pad" *ngIf="selectedType.value === 2">
       <mat-form-field appearance="fill">
         <mat-label>HP Total</mat-label>
-        <input matInput type="number" [(ngModel)]="pHP" max="999" min="1">
+        <input matInput type="number" [formControl]="pHP" max="999" min="1" required>
+        <mat-error *ngIf="pHP.hasError('max')">HP Máximo é 999.</mat-error>
+        <mat-error *ngIf="pHP.hasError('required')">Este campo é Obrigatório.</mat-error>
       </mat-form-field>
     </div>
     <div class="pad">
       <mat-form-field appearance="fill">
         <mat-label>Stat Point</mat-label>
-        <input matInput type="number" max="40" min="1" [(ngModel)]="pStat">
+        <input matInput type="number" max="40" min="1" [formControl]="pStat" required>
+        <mat-error *ngIf="pStat.hasError('max')">Stat Máximo é 40.</mat-error>
+        <mat-error *ngIf="pStat.hasError('required')">Este campo é Obrigatório.</mat-error>
       </mat-form-field>
     </div>
     <div class="pad">
       <mat-form-field appearance="fill">
         <mat-label>Skill Power</mat-label>
-        <input matInput type="number" max="40" min="1" [(ngModel)]="pSkillPow">
+        <input matInput type="number" min="1" [(ngModel)]="pSkillPow">
       </mat-form-field>
     </div>
     <div class="pad">
       <mat-form-field appearance="fill">
         <mat-label>N° Dado</mat-label>
-        <input matInput type="number" [(ngModel)]="diceNumb" min="1" max="24">
+        <input matInput type="number" [(ngModel)]="diceNumb" min="1" max="6" #inputDice>
       </mat-form-field>
     </div>
     <div class="pad">
-      <mat-checkbox class="check-margin" [(ngModel)]="isCrit">Critical?</mat-checkbox>
-      <mat-checkbox class="check-margin" [(ngModel)]="isWeak">Fraqueza?</mat-checkbox>
-      <mat-checkbox class="check-margin" [(ngModel)]="isFocus">Focus?</mat-checkbox>
+      <mat-checkbox class="check-margin" [disabled]="selectedType.value === 3" color="primary" [(ngModel)]="isCrit">
+        Critical
+      </mat-checkbox>
+      <mat-checkbox class="check-margin" [disabled]="selectedType.value !== 3" color="primary" [(ngModel)]="isWeak">
+        Fraqueza
+      </mat-checkbox>
+      <mat-checkbox class="check-margin" [(ngModel)]="isFocus" color="primary">
+        {{selectedType.value === 3 ? 'Mind Charge' : 'Focus'}}
+      </mat-checkbox>
     </div>
     <br>
     <div class="pad">
       <h2>Buffs</h2>
       <mat-list>
         <mat-list-item *ngFor="let buff of buffs">
-          <mat-checkbox [(ngModel)]="buff.selected">{{buff.name}}</mat-checkbox>
+          <mat-checkbox [(ngModel)]="buff.selected" color="primary" matTooltip="{{buff.desc}}">{{buff.name}}
+          </mat-checkbox>
           <div class="check-margin">
             <mat-form-field appearance="legacy">
               <mat-label>Stacks</mat-label>
@@ -79,7 +92,8 @@
       <h2>Debuffs</h2>
       <mat-list>
         <mat-list-item *ngFor="let debuff of debuffs">
-          <mat-checkbox [(ngModel)]="debuff.selected">{{debuff.name}}</mat-checkbox>
+          <mat-checkbox [(ngModel)]="debuff.selected" color="primary" matTooltip="{{debuff.desc}}">{{debuff.name}}
+          </mat-checkbox>
           <div class="check-margin">
             <mat-form-field appearance="legacy">
               <mat-label>Stacks</mat-label>
