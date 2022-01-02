@@ -143,13 +143,13 @@ export class MainComponent {
     if (accuracy !== 'miss') {
       if (accuracy === 'critical' && val !== 3) {
         this.isCrit = true;
-        sound = new Audio('../../../../assets/audio/crit.wav');
+        sound = new Audio('/assets/audio/crit.wav');
       } else {
-        sound = new Audio('../../../../assets/audio/atk.wav');
+        sound = new Audio('/assets/audio/atk.wav');
       }
 
       if (accuracy === 'ok_weak') {
-        sound = new Audio('../../../../assets/audio/crit.wav');
+        sound = new Audio('/assets/audio/crit.wav');
       }
 
       this.diceNumb = this.selectedSkillLvl;
@@ -178,7 +178,7 @@ export class MainComponent {
         attackResultsDOM
       );
     } else {
-      sound = new Audio('../../../../assets/audio/miss.wav');
+      sound = new Audio('/assets/audio/miss.wav');
     }
 
     if (localStorage.getItem('sound_enabled') === 'true') {
