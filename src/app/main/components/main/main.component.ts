@@ -427,7 +427,11 @@ export class MainComponent {
       }
     }
 
-    if (this.isWeak) {
+    if (result === 'critical' && this.selectedType.value === 3) {
+      result = 'ok';
+    }
+
+    if (result !== 'miss' && this.isWeak) {
       result = 'ok_weak';
     }
 
