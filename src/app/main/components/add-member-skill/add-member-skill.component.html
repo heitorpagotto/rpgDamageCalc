@@ -1,0 +1,61 @@
+<h1 mat-dialog-title>Add Skill</h1>
+<div mat-dialog-content>
+  <div class="content_row">
+    <mat-form-field color="accent" appearance="outline">
+      <mat-label>Skill Name</mat-label>
+      <input matInput type="text">
+    </mat-form-field>
+  </div>
+  <div class="content_row">
+    <mat-form-field color="accent" appearance="outline">
+      <mat-label>Skill Description</mat-label>
+      <input matInput type="text">
+    </mat-form-field>
+  </div>
+  <div class="content_row">
+    <mat-form-field color="accent" appearance="outline">
+      <mat-label>Skill Cost</mat-label>
+      <input matInput type="number">
+    </mat-form-field>
+    <mat-form-field color="accent" appearance="outline">
+      <mat-label>Skill Power</mat-label>
+      <input matInput type="number">
+    </mat-form-field>
+    <mat-form-field color="accent" appearance="outline">
+      <mat-label>Skill Level</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let level of skillLevels" [value]="level.id">{{level.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="content_row">
+    <mat-form-field color="accent" appearance="outline">
+      <mat-label>Skill Type</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let types of skillTypes " [value]="types.id">
+          {{types.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field color="accent" appearance="outline">
+      <mat-label>Skill Element</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let elements of elementTypes " [value]="elements.id">
+          {{elements.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+<div mat-dialog-actions [align]="'end'">
+  <button mat-flat-button (click)="close()">Close</button>
+  <button mat-raised-button color="accent">Add</button>
+</div>
+
+<!-- name: string;
+  description: string;
+  diceRollLevel: number;
+  cost: number;
+  skillType: ESkillTypes;
+  skillElement: EElementTypes;
+  skillPower: number; -->

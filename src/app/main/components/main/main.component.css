@@ -129,3 +129,9 @@
     transform: translateY(0);
   }
 }
+
+
+
+.body_container {
+  padding: 1rem;
+}

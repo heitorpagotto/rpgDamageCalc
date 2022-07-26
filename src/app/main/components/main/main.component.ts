@@ -1,8 +1,10 @@
+import { SKILL_LEVELS } from './../../../../shared/constants/SKILL_LEVELS';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { AddPartyMemberComponent } from '../add-party-member/add-party-member.component';
 import { DialogRefComponent } from '../dialogRef/dialogRef.component';
 
 @Component({
@@ -63,19 +65,14 @@ export class MainComponent {
     { name: 'Magico', id: 3 },
   ];
 
-  skillLevel = [
-    { name: 'Ataque Normal (D6)', id: 6 },
-    { name: 'Leve (D8)', id: 8 },
-    { name: 'Médio (D10)', id: 10 },
-    { name: 'Pesado (D12)', id: 12 },
-    { name: 'Mega (D16)', id: 16 },
-    { name: 'Severe (D24)', id: 24 },
-  ];
+  skillLevel = SKILL_LEVELS;
 
   isCrit = false;
   isWeak = false;
   isFocus = false;
   isMulti = false;
+
+  addPartyMember: boolean = true;
 
   buffs = [
     {
@@ -454,9 +451,13 @@ export class MainComponent {
   }
 
   openConfigDialog(): void {
-    const dialogRef = this.dialog.open(DialogRefComponent, {
+    this.dialog.open(DialogRefComponent, {
       width: '300px',
     });
+  }
+
+  openPartyMemberDialog(): void {
+    this.dialog.open(AddPartyMemberComponent, {});
   }
 }
 

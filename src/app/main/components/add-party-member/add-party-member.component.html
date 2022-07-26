@@ -1,0 +1,83 @@
+<h1>Add a Party Member</h1>
+<div>
+  <div class="content_row">
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>Name</mat-label>
+      <input matInput type="text">
+    </mat-form-field>
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>Nickname</mat-label>
+      <input matInput type="text">
+    </mat-form-field>
+  </div>
+  <div class="content_row">
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>Current Level</mat-label>
+      <input matInput type="number">
+    </mat-form-field>
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>Current EXP</mat-label>
+      <input matInput type="number">
+    </mat-form-field>
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>Total EXP</mat-label>
+      <input matInput type="number">
+    </mat-form-field>
+  </div>
+  <div class="content_row">
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>Current HP</mat-label>
+      <input matInput type="number">
+    </mat-form-field>
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>Total HP</mat-label>
+      <input matInput type="number">
+    </mat-form-field>
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>Current MP</mat-label>
+      <input matInput type="number">
+    </mat-form-field>
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>Total MP</mat-label>
+      <input matInput type="number">
+    </mat-form-field>
+  </div>
+  <div class="content_row">
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>ST</mat-label>
+      <input matInput type="number">
+    </mat-form-field>
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>MA</mat-label>
+      <input matInput type="number">
+    </mat-form-field>
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>EN</mat-label>
+      <input matInput type="number">
+    </mat-form-field>
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>AG</mat-label>
+      <input matInput type="number">
+    </mat-form-field>
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>LU</mat-label>
+      <input matInput type="number">
+    </mat-form-field>
+  </div>
+  <div>
+    <div class="header_container align-items-center justify-between" style="padding: 0.5rem">
+      <h3 style="font-size: 1.5rem; margin: 0">Skills</h3>
+      <button mat-mini-fab color="primary" (click)="openSkillDialog()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+    <mat-divider></mat-divider>
+    <div>
+      No Skills Found
+    </div>
+  </div>
+</div>
+<div>
+  <button mat-flat-button (click)="cancelAddition()">Cancel</button>
+  <button mat-raised-button color="primary">Add Party Member</button>
+</div>

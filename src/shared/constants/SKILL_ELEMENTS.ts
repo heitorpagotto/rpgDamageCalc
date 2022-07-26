@@ -1,0 +1,15 @@
+export const SKILL_ELEMENT_TYPES = [
+  { id: 0, name: 'Physical' },
+  { id: 1, name: 'Fire' },
+  { id: 2, name: 'Ice' },
+  { id: 3, name: 'Force' },
+  { id: 4, name: 'Electric' },
+  { id: 5, name: 'Death' },
+  { id: 6, name: 'Light' },
+  { id: 7, name: 'Mind' },
+  { id: 8, name: 'Curse' },
+  { id: 9, name: 'Nerve' },
+  { id: 10, name: 'Almighty' },
+  { id: 11, name: 'Support' },
+  { id: 12, name: 'Passive' },
+];

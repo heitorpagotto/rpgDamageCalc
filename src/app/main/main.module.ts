@@ -17,6 +17,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { DialogRefComponent } from './components/dialogRef/dialogRef.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSliderModule } from '@angular/material/slider';
+import { AddPartyMemberComponent } from './components/add-party-member/add-party-member.component';
+import { AddMemberSkillComponent } from './components/add-member-skill/add-member-skill.component';
 
 const materialImports = [
   MatFormFieldModule,
@@ -34,7 +36,12 @@ const materialImports = [
 ];
 
 @NgModule({
-  declarations: [MainComponent, DialogRefComponent],
+  declarations: [
+    MainComponent,
+    DialogRefComponent,
+    AddPartyMemberComponent,
+    AddMemberSkillComponent,
+  ],
   imports: [
     CommonModule,
     MainRoutingModule,

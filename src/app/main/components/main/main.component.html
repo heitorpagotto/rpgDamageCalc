@@ -3,15 +3,32 @@
     <div></div>
     <h1>Calculate Damage</h1>
     <div>
-      <a mat-icon-button href="https://github.com/heitorpagotto/rpgDamageCalc" target="_blank">
+      <a mat-icon-button href="https://github.com/heitorpagotto/rpgDamageCalc" target="_blank"
+        title="Visit the Github Page">
         <mat-icon svgIcon="github"></mat-icon>
       </a>
-      <button mat-icon-button (click)="openConfigDialog()">
+      <button mat-icon-button (click)="openConfigDialog()" title="Open Settings">
         <mat-icon>settings</mat-icon>
       </button>
     </div>
   </div>
   <mat-tab-group>
+    <mat-tab label="Party">
+      <ng-container *ngIf="addPartyMember">
+        <div class="body_container">
+          <app-add-party-member (cancelAddPartyMember)="$event === true ? addPartyMember = false : false">
+          </app-add-party-member>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!addPartyMember">
+        <div class="header_container">
+          <button mat-fab color="primary" (click)="addPartyMember = true" title="Add a Party Member">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+        No Party Members
+      </ng-container>
+    </mat-tab>
     <mat-tab label="Combat">
       <div class="container">
         <div class="item-row">
