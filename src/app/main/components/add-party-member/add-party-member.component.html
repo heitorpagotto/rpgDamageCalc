@@ -1,83 +1,106 @@
 <h1>Add a Party Member</h1>
 <div>
-  <div class="content_row">
-    <mat-form-field appearance="outline" color="accent">
-      <mat-label>Name</mat-label>
-      <input matInput type="text">
-    </mat-form-field>
-    <mat-form-field appearance="outline" color="accent">
-      <mat-label>Nickname</mat-label>
-      <input matInput type="text">
-    </mat-form-field>
-  </div>
-  <div class="content_row">
-    <mat-form-field appearance="outline" color="accent">
-      <mat-label>Current Level</mat-label>
-      <input matInput type="number">
-    </mat-form-field>
-    <mat-form-field appearance="outline" color="accent">
-      <mat-label>Current EXP</mat-label>
-      <input matInput type="number">
-    </mat-form-field>
-    <mat-form-field appearance="outline" color="accent">
-      <mat-label>Total EXP</mat-label>
-      <input matInput type="number">
-    </mat-form-field>
-  </div>
-  <div class="content_row">
-    <mat-form-field appearance="outline" color="accent">
-      <mat-label>Current HP</mat-label>
-      <input matInput type="number">
-    </mat-form-field>
-    <mat-form-field appearance="outline" color="accent">
-      <mat-label>Total HP</mat-label>
-      <input matInput type="number">
-    </mat-form-field>
-    <mat-form-field appearance="outline" color="accent">
-      <mat-label>Current MP</mat-label>
-      <input matInput type="number">
-    </mat-form-field>
-    <mat-form-field appearance="outline" color="accent">
-      <mat-label>Total MP</mat-label>
-      <input matInput type="number">
-    </mat-form-field>
-  </div>
-  <div class="content_row">
-    <mat-form-field appearance="outline" color="accent">
-      <mat-label>ST</mat-label>
-      <input matInput type="number">
-    </mat-form-field>
-    <mat-form-field appearance="outline" color="accent">
-      <mat-label>MA</mat-label>
-      <input matInput type="number">
-    </mat-form-field>
-    <mat-form-field appearance="outline" color="accent">
-      <mat-label>EN</mat-label>
-      <input matInput type="number">
-    </mat-form-field>
-    <mat-form-field appearance="outline" color="accent">
-      <mat-label>AG</mat-label>
-      <input matInput type="number">
-    </mat-form-field>
-    <mat-form-field appearance="outline" color="accent">
-      <mat-label>LU</mat-label>
-      <input matInput type="number">
-    </mat-form-field>
-  </div>
+  <form [formGroup]="partyMemberForm">
+    <div class="content_row">
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Name</mat-label>
+        <input matInput type="text" formControlName="name">
+      </mat-form-field>
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Nickname</mat-label>
+        <input matInput type="text" formControlName="nickname">
+      </mat-form-field>
+    </div>
+    <div class="content_row">
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Current Level</mat-label>
+        <input matInput type="number" formControlName="level">
+      </mat-form-field>
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Current EXP</mat-label>
+        <input matInput type="number" formControlName="currentEXP">
+      </mat-form-field>
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Total EXP</mat-label>
+        <input matInput type="number">
+      </mat-form-field>
+    </div>
+    <div class="content_row">
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Current HP</mat-label>
+        <input matInput type="number">
+      </mat-form-field>
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Total HP</mat-label>
+        <input matInput type="number">
+      </mat-form-field>
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Current MP</mat-label>
+        <input matInput type="number">
+      </mat-form-field>
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Total MP</mat-label>
+        <input matInput type="number">
+      </mat-form-field>
+    </div>
+  </form>
+  <form [formGroup]="statsForm">
+    <div class="content_row">
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>ST</mat-label>
+        <input matInput type="number" formControlName="ST">
+      </mat-form-field>
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>MA</mat-label>
+        <input matInput type="number" formControlName="MA">
+      </mat-form-field>
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>EN</mat-label>
+        <input matInput type="number" formControlName="EN">
+      </mat-form-field>
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>AG</mat-label>
+        <input matInput type="number" formControlName="AG">
+      </mat-form-field>
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>LU</mat-label>
+        <input matInput type="number" formControlName="LU">
+      </mat-form-field>
+    </div>
+  </form>
   <div>
     <div class="header_container align-items-center justify-between" style="padding: 0.5rem">
       <h3 style="font-size: 1.5rem; margin: 0">Skills</h3>
-      <button mat-mini-fab color="primary" (click)="openSkillDialog()">
+      <button type="button" mat-mini-fab color="primary" (click)="openSkillDialog()">
         <mat-icon>add</mat-icon>
       </button>
     </div>
     <mat-divider></mat-divider>
-    <div>
+    <div class="p-1 text-center" *ngIf="skills.length === 0">
       No Skills Found
+    </div>
+    <div *ngFor="let skill of skills" class="card-spacing">
+      <mat-card>
+        <div class="flex-container justify-between align-items-center ">
+          <h4 class="m-0">{{skill.name}}</h4>
+          <span>{{skill.description}}</span>
+          <!--convert enum-->
+          <span>{{skill.skillElement}}</span>
+          <span>{{skill.cost}} {{skill.skillType === 3 ? 'MP' : 'HP'}}</span>
+          <div>
+            <button type="button" mat-icon-button (click)="editSkillDialog(skill)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button type="button" mat-icon-button (click)="removeSkill(skill.id)">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-card>
     </div>
   </div>
 </div>
-<div>
-  <button mat-flat-button (click)="cancelAddition()">Cancel</button>
-  <button mat-raised-button color="primary">Add Party Member</button>
+<div class="text-center p-1 ">
+  <button type="button" mat-flat-button (click)="cancelAddition()" class="mr-1">Cancel</button>
+  <button mat-raised-button color="primary" (click)="addPartyMember()">Add Party Member</button>
 </div>

@@ -15,6 +15,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatMenuModule } from '@angular/material/menu';
 import { DialogRefComponent } from './components/dialogRef/dialogRef.component';
+import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSliderModule } from '@angular/material/slider';
 import { AddPartyMemberComponent } from './components/add-party-member/add-party-member.component';
@@ -33,6 +34,7 @@ const materialImports = [
   MatMenuModule,
   MatDialogModule,
   MatSliderModule,
+  MatCardModule,
 ];
 
 @NgModule({

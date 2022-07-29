@@ -12,6 +12,7 @@ export class DemonPartyMember {
   currentMP: number;
   totalMP: number;
   stats: DemonStats;
+  skills: Skill[];
 }
 
 export class DemonStats {
@@ -31,4 +32,9 @@ export class Skill {
   skillType: ESkillTypes;
   skillElement: EElementTypes;
   skillPower: number;
+}
+
+export class ModalSkillEdit {
+  isEdit: boolean;
+  skill: Skill;
 }

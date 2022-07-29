@@ -1,7 +1,7 @@
 export enum ESkillTypes {
-  Physical = 0,
-  Magic = 1,
+  Physical = 1,
   PhysicalHPBased = 2,
+  Magic = 3,
 }
 
 export enum EElementTypes {
