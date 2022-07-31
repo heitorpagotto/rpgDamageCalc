@@ -5,6 +5,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { NgxIndexedDBService } from 'ngx-indexed-db';
 import { DemonPartyMember, Skill } from 'src/shared/models/all-models';
 import { AddMemberSkillComponent } from '../add-member-skill/add-member-skill.component';
+import { EElementTypes, ESkillTypes } from 'src/shared/models/all-enums';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-party-member',
@@ -15,23 +17,39 @@ export class AddPartyMemberComponent implements OnInit {
   @Input()
   partyMember?: DemonPartyMember;
 
-  @Output() cancelAddPartyMember: EventEmitter<boolean> =
+  @Input()
+  isEdit: boolean;
+
+  @Output() returnFromAddPartyMember: EventEmitter<boolean> =
     new EventEmitter<boolean>();
 
-  public skills: Skill[] = [];
+  public skills: Skill[] = [
+    {
+      id: 1,
+      name: 'Attack',
+      description: 'Regular attack',
+      diceRollLevel: 6,
+      cost: 0,
+      skillType: ESkillTypes.Physical,
+      skillElement: EElementTypes.Physical,
+      skillPower: 36,
+    },
+  ];
   public selectedSkill: Skill | undefined;
 
   public partyMemberForm: FormGroup;
   public statsForm: FormGroup;
   constructor(
     public dialog: MatDialog,
-    private dbService: NgxIndexedDBService
+    private dbService: NgxIndexedDBService,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
     let partyMember = new DemonPartyMember();
     if (this.partyMember) {
       partyMember = this.partyMember;
+      this.skills = this.partyMember.skills;
     }
     this.initForm(partyMember);
     this.initStatsForm(
@@ -62,7 +80,7 @@ export class AddPartyMemberComponent implements OnInit {
   }
 
   cancelAddition(): void {
-    this.cancelAddPartyMember.emit(true);
+    this.returnFromAddPartyMember.emit(true);
   }
 
   addSkill(skill: Skill): void {
@@ -90,7 +108,7 @@ export class AddPartyMemberComponent implements OnInit {
     this.partyMemberForm = new FormGroup({
       id: new FormControl(model.id),
       name: new FormControl(model.name, [Validators.required]),
-      nickname: new FormControl(model.nickname, [Validators.required]),
+      nickname: new FormControl(model.nickname),
       level: new FormControl(model.level, [Validators.required]),
       currentEXP: new FormControl(model.currentEXP, [Validators.required]),
       totalEXP: new FormControl(model.totalEXP, [Validators.required]),
@@ -100,6 +118,7 @@ export class AddPartyMemberComponent implements OnInit {
       totalMP: new FormControl(model.totalMP, [Validators.required]),
       stats: new FormControl(model.stats, [Validators.required]),
       skills: new FormControl(model.skills, [Validators.required]),
+      race: new FormControl(model.race, [Validators.required]),
     });
   }
 
@@ -113,9 +132,53 @@ export class AddPartyMemberComponent implements OnInit {
     });
   }
 
+  insertPartyMember(model: DemonPartyMember): void {
+    this.dbService.add('party_member', model).subscribe({
+      next: () => {
+        this.returnFromAddPartyMember.emit(true);
+        this._snackBar.open('Successfully added party member!');
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
+
+  editPartyMember(model: DemonPartyMember): void {
+    this.dbService.update('party_member', model).subscribe({
+      next: () => {
+        this.returnFromAddPartyMember.emit(true);
+        this._snackBar.open('Successfully updated party member!');
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
+
   addPartyMember(): void {
-    console.log('Added!');
-    console.log(this.partyMemberForm.value as DemonPartyMember);
-    // this.dbService.add();
+    this.partyMemberForm.get('skills')?.setValue(this.skills);
+    if (!this.statsForm.valid) {
+      this.statsForm.markAllAsTouched();
+    }
+    if (!this.partyMemberForm.valid) {
+      this.partyMemberForm.markAllAsTouched();
+    }
+    if (this.statsForm.valid) {
+      const statsValue = this.statsForm.value as DemonStats;
+      this.partyMemberForm.get('stats')?.setValue(statsValue);
+    }
+    if (this.statsForm.valid && this.partyMemberForm.valid) {
+      const value = this.partyMemberForm.value as DemonPartyMember;
+      if (this.isEdit) {
+        this.editPartyMember(value);
+      } else {
+        delete value.id;
+        this.insertPartyMember(value);
+      }
+    } else {
+      this.statsForm.markAllAsTouched();
+      this.partyMemberForm.markAllAsTouched();
+    }
   }
 }

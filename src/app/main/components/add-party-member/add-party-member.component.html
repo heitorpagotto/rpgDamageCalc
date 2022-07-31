@@ -1,46 +1,63 @@
-<h1>Add a Party Member</h1>
+<h1>
+  {{isEdit === true ? 'Edit ' : 'Add '}}
+  a Party Member
+</h1>
 <div>
   <form [formGroup]="partyMemberForm">
     <div class="content_row">
       <mat-form-field appearance="outline" color="accent">
         <mat-label>Name</mat-label>
         <input matInput type="text" formControlName="name">
+        <mat-error>This field is required</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline" color="accent">
         <mat-label>Nickname</mat-label>
         <input matInput type="text" formControlName="nickname">
+        <mat-error>This field is required</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Race</mat-label>
+        <input matInput type="text" formControlName="race">
+        <mat-error>This field is required</mat-error>
       </mat-form-field>
     </div>
     <div class="content_row">
       <mat-form-field appearance="outline" color="accent">
         <mat-label>Current Level</mat-label>
         <input matInput type="number" formControlName="level">
+        <mat-error>This field is required</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline" color="accent">
         <mat-label>Current EXP</mat-label>
         <input matInput type="number" formControlName="currentEXP">
+        <mat-error>This field is required</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline" color="accent">
         <mat-label>Total EXP</mat-label>
-        <input matInput type="number">
+        <input matInput type="number" formControlName="totalEXP">
+        <mat-error>This field is required</mat-error>
       </mat-form-field>
     </div>
     <div class="content_row">
       <mat-form-field appearance="outline" color="accent">
         <mat-label>Current HP</mat-label>
-        <input matInput type="number">
+        <input matInput type="number" formControlName="currentHP">
+        <mat-error>This field is required</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline" color="accent">
         <mat-label>Total HP</mat-label>
-        <input matInput type="number">
+        <input matInput type="number" formControlName="totalHP">
+        <mat-error>This field is required</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline" color="accent">
         <mat-label>Current MP</mat-label>
-        <input matInput type="number">
+        <input matInput type="number" formControlName="currentMP">
+        <mat-error>This field is required</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline" color="accent">
         <mat-label>Total MP</mat-label>
-        <input matInput type="number">
+        <input matInput type="number" formControlName="totalMP">
+        <mat-error>This field is required</mat-error>
       </mat-form-field>
     </div>
   </form>
@@ -49,22 +66,27 @@
       <mat-form-field appearance="outline" color="accent">
         <mat-label>ST</mat-label>
         <input matInput type="number" formControlName="ST">
+        <mat-error>This field is required</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline" color="accent">
         <mat-label>MA</mat-label>
         <input matInput type="number" formControlName="MA">
+        <mat-error>This field is required</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline" color="accent">
         <mat-label>EN</mat-label>
         <input matInput type="number" formControlName="EN">
+        <mat-error>This field is required</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline" color="accent">
         <mat-label>AG</mat-label>
         <input matInput type="number" formControlName="AG">
+        <mat-error>This field is required</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline" color="accent">
         <mat-label>LU</mat-label>
         <input matInput type="number" formControlName="LU">
+        <mat-error>This field is required</mat-error>
       </mat-form-field>
     </div>
   </form>
@@ -80,21 +102,27 @@
       No Skills Found
     </div>
     <div *ngFor="let skill of skills" class="card-spacing">
-      <mat-card>
-        <div class="flex-container justify-between align-items-center ">
-          <h4 class="m-0">{{skill.name}}</h4>
+      <mat-card mat-ripple>
+        <div class="flex-container justify-between align-items-center">
+          <span class="skill_name">{{skill.name}}</span>
           <span>{{skill.description}}</span>
-          <!--convert enum-->
-          <span>{{skill.skillElement}}</span>
-          <span>{{skill.cost}} {{skill.skillType === 3 ? 'MP' : 'HP'}}</span>
-          <div>
-            <button type="button" mat-icon-button (click)="editSkillDialog(skill)">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button type="button" mat-icon-button (click)="removeSkill(skill.id)">
-              <mat-icon>close</mat-icon>
-            </button>
-          </div>
+          <span>{{skill.skillElement | enumConversion }}</span>
+          <ng-container *ngIf="!skill.description.includes('Regular attack')">
+            <span class="flex-container align-items-center">
+              {{skill.cost}}
+              <span class="cost_type {{skill.skillType === 3 ? 'mp_type' : 'hp_type'}}">
+                {{skill.skillType === 3 ? 'MP' : 'HP'}}
+              </span>
+            </span>
+            <div (click)="$event.stopPropagation()">
+              <button type="button" mat-icon-button (click)="editSkillDialog(skill)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button type="button" mat-icon-button (click)="removeSkill(skill.id)">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+          </ng-container>
         </div>
       </mat-card>
     </div>
@@ -102,5 +130,8 @@
 </div>
 <div class="text-center p-1 ">
   <button type="button" mat-flat-button (click)="cancelAddition()" class="mr-1">Cancel</button>
-  <button mat-raised-button color="primary" (click)="addPartyMember()">Add Party Member</button>
+  <button mat-raised-button color="primary" (click)="addPartyMember()">
+    {{isEdit === true ? 'Edit ' : 'Add '}}
+    Party Member
+  </button>
 </div>

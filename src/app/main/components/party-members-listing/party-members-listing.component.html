@@ -1,0 +1,49 @@
+<ng-container *ngIf="addPartyMember">
+  <div class="body_container">
+    <app-add-party-member [isEdit]="isToEditPartyMember" [partyMember]="selectedPartyMember"
+      (returnFromAddPartyMember)="$event === true ? changeView() : false">
+    </app-add-party-member>
+  </div>
+</ng-container>
+<ng-container *ngIf="!addPartyMember">
+  <div class="header_container">
+    <button mat-fab color="primary"
+      (click)="selectedPartyMember = undefined; isToEditPartyMember = false; addPartyMember = true"
+      title="Add a Party Member">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  <ng-container *ngIf="partyMembers.length === 0">
+    <div class="text-center" t>
+      <span>
+        No Party Members
+      </span>
+    </div>
+  </ng-container>
+  <div style="margin: 0.5rem 0;" *ngFor="let member of partyMembers">
+    <mat-card>
+      <h2 mat-card-title>
+        {{member.name}}
+        <ng-container *ngIf="member.nickname !== null">
+          ({{member.nickname}})
+        </ng-container>
+      </h2>
+      <span mat-card-subtitle>{{member.race}}</span>
+      <div mat-card-content>
+        <span>
+          {{member.currentEXP}}
+        </span>
+      </div>
+      <div class="flex-container">
+        <button mat-flat-button (click)="editPartyMember(member)">
+          <mat-icon>edit</mat-icon>
+          Edit Party Member
+        </button>
+        <button mat-flat-button (click)="deletePartyMember(member.id!)">
+          <mat-icon>delete</mat-icon>
+          Delete Party Member
+        </button>
+      </div>
+    </mat-card>
+  </div>
+</ng-container>

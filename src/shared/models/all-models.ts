@@ -1,7 +1,7 @@
 import { EElementTypes, ESkillTypes } from './all-enums';
 
 export class DemonPartyMember {
-  id: number;
+  id?: number;
   name: string;
   nickname: string;
   level: number;
@@ -13,6 +13,7 @@ export class DemonPartyMember {
   totalMP: number;
   stats: DemonStats;
   skills: Skill[];
+  race: string;
 }
 
 export class DemonStats {

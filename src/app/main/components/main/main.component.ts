@@ -72,7 +72,7 @@ export class MainComponent {
   isFocus = false;
   isMulti = false;
 
-  addPartyMember: boolean = true;
+  addPartyMember: boolean = false;
 
   buffs = [
     {

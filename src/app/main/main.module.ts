@@ -20,8 +20,17 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSliderModule } from '@angular/material/slider';
 import { AddPartyMemberComponent } from './components/add-party-member/add-party-member.component';
 import { AddMemberSkillComponent } from './components/add-member-skill/add-member-skill.component';
+import { SharedModule } from 'src/shared/shared.module';
+import { MatRippleModule } from '@angular/material/core';
+import { PartyMembersListingComponent } from './components/party-members-listing/party-members-listing.component';
+import {
+  MatSnackBarModule,
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
+} from '@angular/material/snack-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 const materialImports = [
+  MatRippleModule,
   MatFormFieldModule,
   MatInputModule,
   MatSelectModule,
@@ -35,6 +44,8 @@ const materialImports = [
   MatDialogModule,
   MatSliderModule,
   MatCardModule,
+  MatSnackBarModule,
+  MatProgressBarModule,
 ];
 
 @NgModule({
@@ -43,6 +54,7 @@ const materialImports = [
     DialogRefComponent,
     AddPartyMemberComponent,
     AddMemberSkillComponent,
+    PartyMembersListingComponent,
   ],
   imports: [
     CommonModule,
@@ -50,6 +62,10 @@ const materialImports = [
     materialImports,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
+  ],
+  providers: [
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } },
   ],
 })
 export class MainModule {}

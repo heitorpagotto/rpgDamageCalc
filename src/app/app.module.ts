@@ -29,6 +29,7 @@ const dbConfig: DBConfig = {
         { name: 'totalMP', keypath: 'totalMP', options: { unique: false } },
         { name: 'stats', keypath: 'stats', options: { unique: false } },
         { name: 'skills', keypath: 'skills', options: { unique: false } },
+        { name: 'race', keypath: 'race', options: { unique: false } },
       ],
     },
   ],
