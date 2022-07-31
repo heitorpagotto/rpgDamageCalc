@@ -1,3 +1,4 @@
+import { BUFFS } from './../../../../shared/constants/BUFFS';
 import { SKILL_LEVELS } from './../../../../shared/constants/SKILL_LEVELS';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
@@ -6,6 +7,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AddPartyMemberComponent } from '../add-party-member/add-party-member.component';
 import { DialogRefComponent } from '../dialogRef/dialogRef.component';
+import { DEBUFFS } from 'src/shared/constants/DEBUFFS';
 
 @Component({
   selector: 'app-main',
@@ -74,52 +76,8 @@ export class MainComponent {
 
   addPartyMember: boolean = false;
 
-  buffs = [
-    {
-      id: 1,
-      name: 'Tarukaja/Makakaja',
-      selected: false,
-      stacks: 1,
-      desc: 'Player (Atk+)',
-    },
-    {
-      id: 2,
-      name: 'Rakukaja',
-      selected: false,
-      stacks: 1,
-      desc: 'Inimigo (Def+)',
-    },
-    {
-      id: 3,
-      name: 'Sukukaja',
-      selected: false,
-      stacks: 1,
-      desc: 'Player (Ag+)',
-    },
-  ];
-  debuffs = [
-    {
-      id: 1,
-      name: 'Tarunda',
-      selected: false,
-      stacks: 1,
-      desc: 'Player (Atk-)',
-    },
-    {
-      id: 2,
-      name: 'Rakunda',
-      selected: false,
-      stacks: 1,
-      desc: 'Inimigo (Def-)',
-    },
-    {
-      id: 3,
-      name: 'Sukunda',
-      selected: false,
-      stacks: 1,
-      desc: 'Player (Ag-)',
-    },
-  ];
+  buffs = BUFFS;
+  debuffs = DEBUFFS;
 
   accuracyResult: AccuracyResult = 'ok';
 

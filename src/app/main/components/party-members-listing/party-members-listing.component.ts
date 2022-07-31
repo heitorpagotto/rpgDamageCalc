@@ -1,7 +1,7 @@
-import { DemonPartyMember } from 'src/shared/models/all-models';
 import { Component, OnInit } from '@angular/core';
-import { NgxIndexedDBService } from 'ngx-indexed-db';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DemonServiceService } from 'src/app/services/demon-service.service';
+import { DemonPartyMember } from 'src/shared/models/all-models';
 
 @Component({
   selector: 'app-party-members-listing',
@@ -17,8 +17,8 @@ export class PartyMembersListingComponent implements OnInit {
   public isToEditPartyMember: boolean;
 
   constructor(
-    private dbService: NgxIndexedDBService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private demonService: DemonServiceService
   ) {}
 
   ngOnInit() {
@@ -26,22 +26,20 @@ export class PartyMembersListingComponent implements OnInit {
   }
 
   private getPartyMembersFromIndexDB() {
-    this.dbService
-      .getAll<DemonPartyMember>('party_member')
+    this.demonService
+      .getAllDemons()
       .subscribe((response: DemonPartyMember[]) => {
         this.partyMembers = response;
       });
   }
 
   public deletePartyMember(id: number): void {
-    this.dbService
-      .deleteByKey('party_member', id)
-      .subscribe((response: boolean) => {
-        if (response === true) {
-          this.getPartyMembersFromIndexDB();
-          this._snackBar.open('Successfully deleted party member!');
-        }
-      });
+    this.demonService.deleteDemon(id).subscribe((response: boolean) => {
+      if (response === true) {
+        this.getPartyMembersFromIndexDB();
+        this._snackBar.open('Successfully deleted party member!');
+      }
+    });
   }
 
   public changeView(): void {

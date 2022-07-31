@@ -96,3 +96,36 @@ body {
 .m-0 {
   margin: 0 !important;
 }
+
+.skill_name {
+  font-weight: 500 !important;
+}
+
+.cost_type {
+  font-size: 12px !important;
+  margin-left: 0.25rem !important;
+  font-weight: 800 !important;
+}
+
+.cost_type.mp_type {
+  color: rgb(144, 29, 252);
+}
+
+.cost_type.hp_type {
+  color: rgb(255, 94, 0);
+}
+
+.section-content {
+  padding: 1rem;
+}
+
+.section-header {
+  padding: 0.75rem;
+  color: rgba(240, 240, 240, 0.75);
+}
+
+.section {
+  border: 1px solid rgba(150, 150, 150, 0.25);
+  border-radius: 5px;
+  width: 100%;
+}

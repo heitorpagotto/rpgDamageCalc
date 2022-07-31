@@ -1,0 +1,139 @@
+<div class="main_content p-1" *ngIf="!selectedMember">
+  <mat-card *ngFor="let party of partyMembers">
+    <mat-card-content mat-ripple (click)="selectDemon(party)">
+      <div class="flex-container information">
+        <div class="">
+          <div>
+            <small>{{party.race}}</small>
+            <h2>
+              {{party.name}}
+              <ng-container *ngIf="party.nickname !== null">
+                ({{party.nickname}})
+              </ng-container>
+            </h2>
+          </div>
+          <span mat-card-subtitle>Lv. {{party.level}}</span>
+        </div>
+        <div class="flex-container flex-column">
+          <div>
+            <span>
+              {{party.currentHP}}/{{party.totalHP}}
+              <span>HP</span>
+            </span>
+            <mat-progress-bar [color]="'warn'" [value]=" (party.currentHP * 100) / party.totalHP">
+            </mat-progress-bar>
+          </div>
+          <div>
+            <span>
+              {{party.currentMP}}/{{party.totalMP}}
+              <span>MP</span>
+            </span>
+            <mat-progress-bar [value]="(party.currentMP * 100) / party.totalMP">
+            </mat-progress-bar>
+          </div>
+          <div>
+            <span>
+              {{party.currentEXP}}/{{party.totalEXP}}
+              <span>XP</span>
+            </span>
+            <mat-progress-bar color="accent" [value]="(party.currentEXP * 100) / party.totalEXP">
+            </mat-progress-bar>
+          </div>
+        </div>
+      </div>
+      <div class="flex-container stats">
+        <div class="stat_container">
+          <span class="title">ST</span>
+          <span>{{party.stats.ST}}</span>
+        </div>
+        <div class="stat_container">
+          <span class="title">MA</span>
+          <span>{{party.stats.MA}}</span>
+        </div>
+        <div class="stat_container">
+          <span class="title">EN</span>
+          <span>{{party.stats.EN}}</span>
+        </div>
+        <div class="stat_container">
+          <span class="title">AG</span>
+          <span>{{party.stats.AG}}</span>
+        </div>
+        <div class="stat_container">
+          <span class="title">LU</span>
+          <span>{{party.stats.LU}}</span>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-flat-button style="width: 100%">
+        <mat-icon>add</mat-icon>
+        Add EXP
+      </button>
+    </mat-card-actions>
+  </mat-card>
+  <ng-container *ngIf="partyMembers.length === 0">
+    <div class="text-center">
+      <span>
+        No Party Members
+      </span>
+    </div>
+  </ng-container>
+</div>
+<div class="p-1" *ngIf="selectedMember">
+  <div class="flex-container">
+    <button mat-icon-button (click)="selectedMember = undefined">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div>
+      <small>{{selectedMember.race}}</small>
+      <h1>{{selectedMember.name}}</h1>
+    </div>
+  </div>
+  <div class="mat-elevation-z2" style="margin-bottom: 1rem">
+    <mat-selection-list #skills [multiple]="false">
+      <mat-list-option *ngFor="let skill of selectedMember.skills" [value]="skill">
+        <div class="flex-container justify-between">
+          <span>
+            {{skill.name}}
+          </span>
+          <span>
+            <span>{{skill.skillElement | enumConversion }}</span>
+          </span>
+          <span class="flex-container align-items-center">
+            {{skill.cost}}
+            <span class="cost_type {{skill.skillType === 3 ? 'mp_type' : 'hp_type'}}">
+              {{skill.skillType === 3 ? 'MP' : 'HP'}}
+            </span>
+          </span>
+        </div>
+      </mat-list-option>
+    </mat-selection-list>
+  </div>
+  <div class="section">
+    <div class="section-content">
+      <div class="flex-container flex-column">
+        <mat-checkbox class="check-margin" [disabled]="skills.selectedOptions.selected[0]?.value.skillType !== 3">
+          Fraqueza
+        </mat-checkbox>
+        <mat-checkbox class="check-margin">
+          {{skills.selectedOptions.selected[0]?.value.skillType === 3 ? 'Mind Charge' : 'Focus'}}
+        </mat-checkbox>
+        <mat-checkbox class="check-margin">
+          Multi-target
+        </mat-checkbox>
+        <!-- <div class="input-margin pad" *ngIf="isMulti">
+          <mat-form-field appearance="legacy">
+            <mat-label>Quantidade de Inimigos</mat-label>
+            <input [formControl]="enemyQnty" type="number" matInput>
+            <mat-error *ngIf="enemyQnty.hasError('required')">Este campo é obrigatório.</mat-error>
+            <mat-error *ngIf="enemyQnty.hasError('min')">Número mínimo de inimigos é 1.</mat-error>
+          </mat-form-field>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <button mat-raised-button color="primary">ATTACK</button>
+  </div>
+</div>

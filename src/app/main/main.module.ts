@@ -28,6 +28,7 @@ import {
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { CombatComponent } from './components/combat/combat.component';
 
 const materialImports = [
   MatRippleModule,
@@ -55,6 +56,7 @@ const materialImports = [
     AddPartyMemberComponent,
     AddMemberSkillComponent,
     PartyMembersListingComponent,
+    CombatComponent,
   ],
   imports: [
     CommonModule,

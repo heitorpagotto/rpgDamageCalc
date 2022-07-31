@@ -1,12 +1,12 @@
-import { DemonStats } from './../../../../shared/models/all-models';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { NgxIndexedDBService } from 'ngx-indexed-db';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { DemonServiceService } from 'src/app/services/demon-service.service';
+import { EElementTypes, ESkillTypes } from 'src/shared/models/all-enums';
 import { DemonPartyMember, Skill } from 'src/shared/models/all-models';
 import { AddMemberSkillComponent } from '../add-member-skill/add-member-skill.component';
-import { EElementTypes, ESkillTypes } from 'src/shared/models/all-enums';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { DemonStats } from './../../../../shared/models/all-models';
 
 @Component({
   selector: 'app-add-party-member',
@@ -41,7 +41,7 @@ export class AddPartyMemberComponent implements OnInit {
   public statsForm: FormGroup;
   constructor(
     public dialog: MatDialog,
-    private dbService: NgxIndexedDBService,
+    private demonService: DemonServiceService,
     private _snackBar: MatSnackBar
   ) {}
 
@@ -133,7 +133,7 @@ export class AddPartyMemberComponent implements OnInit {
   }
 
   insertPartyMember(model: DemonPartyMember): void {
-    this.dbService.add('party_member', model).subscribe({
+    this.demonService.insertDemon(model).subscribe({
       next: () => {
         this.returnFromAddPartyMember.emit(true);
         this._snackBar.open('Successfully added party member!');
@@ -145,7 +145,7 @@ export class AddPartyMemberComponent implements OnInit {
   }
 
   editPartyMember(model: DemonPartyMember): void {
-    this.dbService.update('party_member', model).subscribe({
+    this.demonService.updateDemon(model).subscribe({
       next: () => {
         this.returnFromAddPartyMember.emit(true);
         this._snackBar.open('Successfully updated party member!');

@@ -12,11 +12,14 @@
       </button>
     </div>
   </div>
-  <mat-tab-group>
+  <mat-tab-group [selectedIndex]="1">
     <mat-tab label="Party">
       <app-party-members-listing></app-party-members-listing>
     </mat-tab>
     <mat-tab label="Combat">
+      <app-combat></app-combat>
+    </mat-tab>
+    <mat-tab label="Damage Calculator">
       <div class="container" style="overflow: hidden">
         <div class="item-row">
           <div class="item-col">

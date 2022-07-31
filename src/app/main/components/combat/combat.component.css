@@ -1,0 +1,40 @@
+mat-card {
+  width: 450px;
+  cursor: pointer;
+  margin-right: 1rem;
+}
+
+.main_content {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+mat-card * {
+  user-select: none;
+}
+
+@media screen and (max-width: 768px) {
+  mat-card {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+.stat_container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.stat_container .title {
+  font-weight: 600;
+}
+
+.stats * {
+  flex: 1;
+  margin-top: 0.5rem;
+}
+
+.information * {
+  flex: 1;
+}

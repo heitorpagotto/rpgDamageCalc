@@ -22,19 +22,69 @@
   </ng-container>
   <div style="margin: 0.5rem 0;" *ngFor="let member of partyMembers">
     <mat-card>
-      <h2 mat-card-title>
-        {{member.name}}
-        <ng-container *ngIf="member.nickname !== null">
-          ({{member.nickname}})
-        </ng-container>
-      </h2>
-      <span mat-card-subtitle>{{member.race}}</span>
-      <div mat-card-content>
-        <span>
-          {{member.currentEXP}}
-        </span>
+      <div class="flex-container information">
+        <div class="">
+          <div>
+            <small>{{member.race}}</small>
+            <h2>
+              {{member.name}}
+              <ng-container *ngIf="member.nickname !== null">
+                ({{member.nickname}})
+              </ng-container>
+            </h2>
+          </div>
+          <span mat-card-subtitle>Lv. {{member.level}}</span>
+        </div>
+        <div class="flex-container flex-column">
+          <div>
+            <span>
+              {{member.currentHP}}/{{member.totalHP}}
+              <span>HP</span>
+            </span>
+            <mat-progress-bar [color]="'warn'" [value]=" (member.currentHP * 100) / member.totalHP">
+            </mat-progress-bar>
+          </div>
+          <div>
+            <span>
+              {{member.currentMP}}/{{member.totalMP}}
+              <span>MP</span>
+            </span>
+            <mat-progress-bar [value]="(member.currentMP * 100) / member.totalMP">
+            </mat-progress-bar>
+          </div>
+          <div>
+            <span>
+              {{member.currentEXP}}/{{member.totalEXP}}
+              <span>XP</span>
+            </span>
+            <mat-progress-bar color="accent" [value]="(member.currentEXP * 100) / member.totalEXP">
+            </mat-progress-bar>
+          </div>
+        </div>
       </div>
-      <div class="flex-container">
+      <div class="flex-container stats">
+        <div class="stat_container">
+          <span class="title">ST</span>
+          <span>{{member.stats.ST}}</span>
+        </div>
+        <div class="stat_container">
+          <span class="title">MA</span>
+          <span>{{member.stats.MA}}</span>
+        </div>
+        <div class="stat_container">
+          <span class="title">EN</span>
+          <span>{{member.stats.EN}}</span>
+        </div>
+        <div class="stat_container">
+          <span class="title">AG</span>
+          <span>{{member.stats.AG}}</span>
+        </div>
+        <div class="stat_container">
+          <span class="title">LU</span>
+          <span>{{member.stats.LU}}</span>
+        </div>
+      </div>
+      <div class="flex-container" style="margin-top: 1rem">
         <button mat-flat-button (click)="editPartyMember(member)">
           <mat-icon>edit</mat-icon>
           Edit Party Member
