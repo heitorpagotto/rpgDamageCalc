@@ -8,6 +8,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { AddPartyMemberComponent } from '../add-party-member/add-party-member.component';
 import { DialogRefComponent } from '../dialogRef/dialogRef.component';
 import { DEBUFFS } from 'src/shared/constants/DEBUFFS';
+import { AccuracyResult } from 'src/app/services/accuracy.service';
 
 @Component({
   selector: 'app-main',
@@ -418,5 +419,3 @@ export class MainComponent {
     this.dialog.open(AddPartyMemberComponent, {});
   }
 }
-
-type AccuracyResult = 'miss' | 'critical' | 'ok' | 'ok_weak';

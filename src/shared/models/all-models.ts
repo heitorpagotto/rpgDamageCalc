@@ -39,3 +39,15 @@ export class ModalSkillEdit {
   isEdit: boolean;
   skill: Skill;
 }
+
+export class PhysicalAttackRequest {
+  player: DemonPartyMember;
+  skill: Skill;
+  isCritical: boolean;
+  isWeakness: boolean;
+  isFocus: boolean;
+  buffs: any[];
+  debuffs: any[];
+  isMultiple: boolean;
+  enemyQuantity: number;
+}

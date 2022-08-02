@@ -109,31 +109,40 @@
       </mat-list-option>
     </mat-selection-list>
   </div>
-  <div class="section">
-    <div class="section-content">
-      <div class="flex-container flex-column">
-        <mat-checkbox class="check-margin" [disabled]="skills.selectedOptions.selected[0]?.value.skillType !== 3">
-          Fraqueza
-        </mat-checkbox>
-        <mat-checkbox class="check-margin">
-          {{skills.selectedOptions.selected[0]?.value.skillType === 3 ? 'Mind Charge' : 'Focus'}}
-        </mat-checkbox>
-        <mat-checkbox class="check-margin">
-          Multi-target
-        </mat-checkbox>
-        <!-- <div class="input-margin pad" *ngIf="isMulti">
-          <mat-form-field appearance="legacy">
-            <mat-label>Quantidade de Inimigos</mat-label>
-            <input [formControl]="enemyQnty" type="number" matInput>
-            <mat-error *ngIf="enemyQnty.hasError('required')">Este campo é obrigatório.</mat-error>
-            <mat-error *ngIf="enemyQnty.hasError('min')">Número mínimo de inimigos é 1.</mat-error>
-          </mat-form-field>
-        </div> -->
+  <div class="flex-container">
+
+    <div class="section">
+      <div class="section-content">
+        <div class="flex-container flex-column">
+          <mat-checkbox class="check-margin" [disabled]="skills.selectedOptions.selected[0]?.value.skillType !== 3">
+            Fraqueza
+          </mat-checkbox>
+          <mat-checkbox class="check-margin">
+            {{skills.selectedOptions.selected[0]?.value.skillType === 3 ? 'Mind Charge' : 'Focus'}}
+          </mat-checkbox>
+          <mat-checkbox class="check-margin">
+            Multi-target
+          </mat-checkbox>
+          <!-- <div class="input-margin pad" *ngIf="isMulti">
+            <mat-form-field appearance="legacy">
+              <mat-label>Quantidade de Inimigos</mat-label>
+              <input [formControl]="enemyQnty" type="number" matInput>
+              <mat-error *ngIf="enemyQnty.hasError('required')">Este campo é obrigatório.</mat-error>
+              <mat-error *ngIf="enemyQnty.hasError('min')">Número mínimo de inimigos é 1.</mat-error>
+            </mat-form-field>
+          </div> -->
+        </div>
       </div>
+    </div>
+    <div class="section">
+      <div class="section-content"></div>
+    </div>
+    <div class="section">
+
     </div>
   </div>
 
-  <div>
+  <div class="text-center p-1">
     <button mat-raised-button color="primary">ATTACK</button>
   </div>
 </div>
