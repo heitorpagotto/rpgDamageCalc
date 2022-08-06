@@ -38,3 +38,32 @@ mat-card * {
 .information * {
   flex: 1;
 }
+
+.checkbox_main *{
+ flex: 1;
+}
+
+.checkbox_main {
+  align-items: center;
+}
+
+.sections .section {
+  margin: 0 1rem;
+}
+
+@media screen and (max-width: 950px) {
+  .sections {
+    flex-direction: column;
+  }
+
+  .sections .section {
+    margin: 1rem 0;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .checkbox_main {
+    flex-direction: column;
+    align-items: unset;
+  }
+}

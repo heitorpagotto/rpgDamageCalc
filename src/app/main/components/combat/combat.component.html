@@ -71,6 +71,7 @@
       </button>
     </mat-card-actions>
   </mat-card>
+
   <ng-container *ngIf="partyMembers.length === 0">
     <div class="text-center">
       <span>
@@ -79,9 +80,15 @@
     </div>
   </ng-container>
 </div>
+<div class="text-center" *ngIf="!selectedMember">
+  <button mat-flat-button (click)="getAllDemons()">
+    <mat-icon>refresh</mat-icon>
+    Refresh Demon List
+  </button>
+</div>
 <div class="p-1" *ngIf="selectedMember">
   <div class="flex-container">
-    <button mat-icon-button (click)="selectedMember = undefined">
+    <button mat-icon-button (click)="returnToDemonList()">
       <mat-icon>arrow_back</mat-icon>
     </button>
     <div>
@@ -89,60 +96,113 @@
       <h1>{{selectedMember.name}}</h1>
     </div>
   </div>
-  <div class="mat-elevation-z2" style="margin-bottom: 1rem">
-    <mat-selection-list #skills [multiple]="false">
-      <mat-list-option *ngFor="let skill of selectedMember.skills" [value]="skill">
-        <div class="flex-container justify-between">
-          <span>
-            {{skill.name}}
-          </span>
-          <span>
-            <span>{{skill.skillElement | enumConversion }}</span>
-          </span>
-          <span class="flex-container align-items-center">
-            {{skill.cost}}
-            <span class="cost_type {{skill.skillType === 3 ? 'mp_type' : 'hp_type'}}">
-              {{skill.skillType === 3 ? 'MP' : 'HP'}}
+  <form [formGroup]="combatDamageForm">
+    <div class="mat-elevation-z2" style="margin-bottom: 1rem">
+      <mat-selection-list #skills [multiple]="false">
+        <mat-list-option *ngFor="let skill of selectedMember.skills" [value]="skill">
+          <div class="flex-container justify-between">
+            <span>
+              {{skill.name}}
             </span>
-          </span>
+            <span>
+              <span>{{skill.skillElement | enumConversion }}</span>
+            </span>
+            <span class="flex-container align-items-center">
+              {{skill.cost}}
+              <span class="cost_type {{skill.skillType === 3 ? 'mp_type' : 'hp_type'}}">
+                {{skill.skillType === 3 ? 'MP' : 'HP'}}
+              </span>
+            </span>
+          </div>
+        </mat-list-option>
+      </mat-selection-list>
+    </div>
+    <div class="flex-container sections">
+      <div class="section">
+        <div class="section-content">
+          <div class="flex-container flex-column">
+            <mat-checkbox formControlName="isWeakness"
+              [disabled]="skills.selectedOptions.selected[0]?.value.skillType !== 3">
+              Weakness
+            </mat-checkbox>
+            <mat-checkbox formControlName="isFocus">
+              {{skills.selectedOptions.selected[0]?.value.skillType === 3 ? 'Mind Charge' : 'Focus'}}
+            </mat-checkbox>
+            <mat-checkbox formControlName="isMultiple">
+              Multi-target
+            </mat-checkbox>
+            <div class="input-margin pad" *ngIf="combatDamageForm.get('isMultiple')?.value === true">
+              <mat-form-field appearance="legacy">
+                <mat-label>Quantidade de Inimigos</mat-label>
+                <input formControlName="enemyQuantity" required min="1" type="number" matInput>
+                <mat-error *ngIf="combatDamageForm.get('enemyQuantity')?.hasError('required')">This field is required.
+                </mat-error>
+                <mat-error *ngIf="combatDamageForm.get('enemyQuantity')?.hasError('min')">Minimum amount of enemies is
+                  1.
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
         </div>
-      </mat-list-option>
-    </mat-selection-list>
-  </div>
-  <div class="flex-container">
-
-    <div class="section">
-      <div class="section-content">
-        <div class="flex-container flex-column">
-          <mat-checkbox class="check-margin" [disabled]="skills.selectedOptions.selected[0]?.value.skillType !== 3">
-            Fraqueza
-          </mat-checkbox>
-          <mat-checkbox class="check-margin">
-            {{skills.selectedOptions.selected[0]?.value.skillType === 3 ? 'Mind Charge' : 'Focus'}}
-          </mat-checkbox>
-          <mat-checkbox class="check-margin">
-            Multi-target
-          </mat-checkbox>
-          <!-- <div class="input-margin pad" *ngIf="isMulti">
-            <mat-form-field appearance="legacy">
-              <mat-label>Quantidade de Inimigos</mat-label>
-              <input [formControl]="enemyQnty" type="number" matInput>
-              <mat-error *ngIf="enemyQnty.hasError('required')">Este campo é obrigatório.</mat-error>
-              <mat-error *ngIf="enemyQnty.hasError('min')">Número mínimo de inimigos é 1.</mat-error>
-            </mat-form-field>
-          </div> -->
+      </div>
+      <div class="section">
+        <div class="section-content">
+          <div class="flex-container flex-column" *ngFor="let buff of buffs">
+            <div class="flex-container checkbox_main">
+              <div>
+                <mat-checkbox [(ngModel)]="buff.selected" [ngModelOptions]="{standalone: true}"
+                  matTooltip="{{buff.desc}}" matTooltipPosition="right">
+                  {{buff.name}}
+                </mat-checkbox>
+              </div>
+              <div *ngIf="buff.selected">
+                <mat-form-field appearance="legacy">
+                  <mat-label>Stacks</mat-label>
+                  <input [(ngModel)]="buff.stacks" [ngModelOptions]="{standalone: true}" #input
+                    [disabled]="!buff.selected" matInput type="number" max="2" min="0">
+                  <mat-error *ngIf="+input.value > 2">
+                    The number of max stacks is 2
+                  </mat-error>
+                  <mat-error *ngIf="+input.value < 0">
+                    The number of min stacks is 0
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-content">
+          <div class="flex-container flex-column" *ngFor="let debuff of debuffs">
+            <div class="flex-container checkbox_main">
+              <div>
+                <mat-checkbox [ngModelOptions]="{standalone: true}" [(ngModel)]="debuff.selected"
+                  matTooltip="{{debuff.desc}}" matTooltipPosition="right">
+                  {{debuff.name}}
+                </mat-checkbox>
+              </div>
+              <div class="input-margin" *ngIf="debuff.selected">
+                <mat-form-field appearance="legacy">
+                  <mat-label>Stacks</mat-label>
+                  <input [ngModelOptions]="{standalone: true}" [(ngModel)]="debuff.stacks" #input matInput type="number"
+                    max="2" min="0">
+                  <mat-error *ngIf="+input.value > 2">
+                    The number of max stacks is 2
+                  </mat-error>
+                  <mat-error *ngIf="+input.value < 0">
+                    The number of min stacks is 0
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="section">
-      <div class="section-content"></div>
-    </div>
-    <div class="section">
-
-    </div>
-  </div>
+  </form>
 
   <div class="text-center p-1">
-    <button mat-raised-button color="primary">ATTACK</button>
+    <button mat-raised-button color="primary" (click)="attack()">ATTACK</button>
   </div>
 </div>

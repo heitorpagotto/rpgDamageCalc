@@ -46,8 +46,23 @@ export class PhysicalAttackRequest {
   isCritical: boolean;
   isWeakness: boolean;
   isFocus: boolean;
-  buffs: any[];
-  debuffs: any[];
+  buffs: BuffModel[];
+  debuffs: BuffModel[];
   isMultiple: boolean;
   enemyQuantity: number;
+}
+
+export class BuffModel {
+  id: number;
+  name: string;
+  desc: string;
+  stacks: number;
+  selected?: boolean;
+}
+
+export class AttackResponse {
+  attackStatus: string;
+  isCritical: boolean;
+  missAttack: boolean;
+  weakness: boolean;
 }

@@ -1,11 +1,10 @@
-import { DEBUFFS } from 'src/shared/constants/DEBUFFS';
-import { BUFFS } from './../../shared/constants/BUFFS';
 import { Injectable } from '@angular/core';
+import { BuffModel } from 'src/shared/models/all-models';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CalcSuccessService {
+export class AccuracyService {
   constructor() {}
 
   public CalcAccuracy(
@@ -13,12 +12,12 @@ export class CalcSuccessService {
     playerLuc: number,
     selectedSkilType: number,
     isWeakness: boolean,
-    buffId?: number,
-    debuffId?: number
+    buffs?: BuffModel[],
+    debuffs?: BuffModel[]
   ): AccuracyResult {
-    const d20 = Math.floor(Math.random() * 20) + 1;
+    const d20 = Math.ceil(Math.random() * 20) + 1;
 
-    const playerAgiBuffValue = this.calcAgilityBuffAndDebuff(buffId, debuffId);
+    const playerAgiBuffValue = this.calcAgilityBuffAndDebuff(buffs, debuffs);
 
     let result: AccuracyResult = 'ok';
 
@@ -87,9 +86,12 @@ export class CalcSuccessService {
     return result;
   }
 
-  private calcAgilityBuffAndDebuff(buffId?: number, debuffId?: number): number {
-    const selectedBuff = BUFFS.find((x) => x.id === buffId);
-    const selectedDebuffs = DEBUFFS.find((x) => x.id === debuffId);
+  private calcAgilityBuffAndDebuff(
+    buffs?: BuffModel[],
+    debuffs?: BuffModel[]
+  ): number {
+    const selectedBuff = buffs?.find((x) => x.id === 3);
+    const selectedDebuffs = debuffs?.find((x) => x.id === 3);
 
     let acutalAgiValue: number = 0;
     if (selectedBuff) {
