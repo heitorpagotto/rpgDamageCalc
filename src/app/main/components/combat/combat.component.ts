@@ -1,5 +1,7 @@
+import { ManagePartyMemberXpComponent } from './../manage-party-member-xp/manage-party-member-xp.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSelectionList } from '@angular/material/list';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AttackService } from 'src/app/services/attack.service';
@@ -7,6 +9,7 @@ import { DemonServiceService } from 'src/app/services/demon-service.service';
 import { BUFFS } from 'src/shared/constants/BUFFS';
 import { DEBUFFS } from 'src/shared/constants/DEBUFFS';
 import {
+  AttackResponse,
   BuffModel,
   DemonPartyMember,
   PhysicalAttackRequest,
@@ -21,6 +24,8 @@ export class CombatComponent implements OnInit {
   public partyMembers: DemonPartyMember[] = [];
   public selectedMember?: DemonPartyMember;
 
+  public attackResult?: AttackResponse;
+
   public buffs = BUFFS;
   public debuffs = DEBUFFS;
 
@@ -31,7 +36,8 @@ export class CombatComponent implements OnInit {
   constructor(
     private demonService: DemonServiceService,
     private attackService: AttackService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private _modal: MatDialog
   ) {}
 
   ngOnInit() {
@@ -45,12 +51,19 @@ export class CombatComponent implements OnInit {
 
   public returnToDemonList(): void {
     this.selectedMember = undefined;
+    this.attackResult = undefined;
     this.getAllDemons();
   }
 
   public getAllDemons(): void {
     this.demonService.getAllDemons().subscribe((response) => {
       this.partyMembers = response;
+    });
+  }
+
+  public openXPModal(currentXP: number, totalXP: number): void {
+    this._modal.open(ManagePartyMemberXpComponent, {
+      data: { currentXP: currentXP, totalXP: totalXP },
     });
   }
 
@@ -81,8 +94,7 @@ export class CombatComponent implements OnInit {
       if (fullValue.skill === null || fullValue.skill === undefined) {
         this._snackBar.open('Select a skill.');
       } else {
-        const result = this.attackService.attack(fullValue);
-        console.log(result);
+        this.attackResult = this.attackService.attack(fullValue);
         // TODO: show attack result animation and redirect the user to the demon select page
       }
     } else {

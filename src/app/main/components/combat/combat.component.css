@@ -67,3 +67,16 @@ mat-card * {
     align-items: unset;
   }
 }
+
+.attack-results {
+  text-align: center;
+  padding: 1rem;
+}
+
+.attack-results span {
+  font-size: 3rem;
+}
+
+.attack-results *:not(button) {
+  font-family: ShinMegamiTensei !important;
+}

@@ -5,6 +5,8 @@ import {
 import { Injectable } from '@angular/core';
 import { AccuracyService } from './accuracy.service';
 import { DamageService } from './damage.service';
+import { DemonServiceService } from './demon-service.service';
+import { NgxIndexedDBService } from 'ngx-indexed-db';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +14,8 @@ import { DamageService } from './damage.service';
 export class AttackService {
   constructor(
     private accuracyService: AccuracyService,
-    private damageService: DamageService
+    private damageService: DamageService,
+    private dbService: NgxIndexedDBService
   ) {}
 
   public attack(model: PhysicalAttackRequest): AttackResponse {
@@ -46,16 +49,25 @@ export class AttackService {
 
       switch (model.skill.skillType) {
         case 1:
-          attackResults +=
-            '-' + this.damageService.calcPhysicalDamage(model) + 'HP';
+          if (model.player.currentHP > model.skill.cost) {
+            model.player.currentHP -= model.skill.cost;
+            attackResults +=
+              '-' + this.damageService.calcPhysicalDamage(model) + 'HP';
+          }
           break;
         case 2:
-          attackResults +=
-            '-' + this.damageService.calcHpPhysicalDamage(model) + 'HP';
+          if (model.player.currentHP > model.skill.cost) {
+            model.player.currentHP -= model.skill.cost;
+            attackResults +=
+              '-' + this.damageService.calcHpPhysicalDamage(model) + 'HP';
+          }
           break;
         case 3:
-          attackResults +=
-            '-' + this.damageService.calcMagicDamage(model) + 'HP';
+          if (model.player.currentMP > model.skill.cost) {
+            model.player.currentMP -= model.skill.cost;
+            attackResults +=
+              '-' + this.damageService.calcMagicDamage(model) + 'HP';
+          }
           break;
       }
     } else {
@@ -68,7 +80,7 @@ export class AttackService {
       sound.play();
     }
 
-    // TODO: call demon service and update mp and hp values
+    this.dbService.update('party_member', model.player).toPromise();
 
     return {
       attackStatus: attackResults,

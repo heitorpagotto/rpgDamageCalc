@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Gerenciar XP</h1>
+<div style="margin-bottom: 1rem">
+  <span>{{data.currentXP}}/{{data.totalXP}}</span>
+  <mat-progress-bar color="accent" [value]="(data.currentXP * 100) / data.totalXP"></mat-progress-bar>
+</div>
+<div>
+  <mat-form-field appearance="outline" color="accent">
+    <mat-label>Quantidade de XP ganha</mat-label>
+    <input type="number" matInput>
+  </mat-form-field>
+</div>
+<div class="text-center">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-raised-button color="accent">Adicionar</button>
+</div>

@@ -65,7 +65,7 @@
       </div>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-flat-button style="width: 100%">
+      <button mat-flat-button style="width: 100%" (click)="openXPModal(party.currentEXP,party.totalEXP)">
         <mat-icon>add</mat-icon>
         Add EXP
       </button>
@@ -86,7 +86,7 @@
     Refresh Demon List
   </button>
 </div>
-<div class="p-1" *ngIf="selectedMember">
+<div class="p-1" *ngIf="selectedMember && !attackResult">
   <div class="flex-container">
     <button mat-icon-button (click)="returnToDemonList()">
       <mat-icon>arrow_back</mat-icon>
@@ -99,7 +99,9 @@
   <form [formGroup]="combatDamageForm">
     <div class="mat-elevation-z2" style="margin-bottom: 1rem">
       <mat-selection-list #skills [multiple]="false">
-        <mat-list-option *ngFor="let skill of selectedMember.skills" [value]="skill">
+        <mat-list-option
+          [disabled]="skill.skillType !== 3 ? selectedMember.currentHP < skill.cost : selectedMember.currentMP < skill.cost"
+          *ngFor="let skill of selectedMember.skills" [value]="skill">
           <div class="flex-container justify-between">
             <span>
               {{skill.name}}
@@ -205,4 +207,18 @@
   <div class="text-center p-1">
     <button mat-raised-button color="primary" (click)="attack()">ATTACK</button>
   </div>
+</div>
+
+<div *ngIf="attackResult" class="attack-results">
+  <div style="margin-bottom: 1rem">
+    <span>
+      {{attackResult.attackStatus}}
+    </span>
+    <span *ngIf="attackResult.isCritical">CRITICAL</span>
+    <span *ngIf="attackResult.weakness">WEAK</span>
+    <span *ngIf="attackResult.missAttack">
+      MISS
+    </span>
+  </div>
+  <button mat-raised-button color="accent" (click)="returnToDemonList()">OK</button>
 </div>
