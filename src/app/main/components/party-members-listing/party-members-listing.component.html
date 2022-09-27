@@ -7,6 +7,8 @@
 </ng-container>
 <ng-container *ngIf="!addPartyMember">
   <div class="header_container">
+    <button mat-flat-button (click)="downloadPartyMembers()">Download Party</button>
+    <button mat-flat-button>Upload Party</button>
     <button mat-fab color="primary"
       (click)="selectedPartyMember = undefined; isToEditPartyMember = false; addPartyMember = true"
       title="Add a Party Member">

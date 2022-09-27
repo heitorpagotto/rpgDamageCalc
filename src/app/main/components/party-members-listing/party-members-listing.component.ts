@@ -42,13 +42,16 @@ export class PartyMembersListingComponent implements OnInit {
     });
   }
 
+  public downloadPartyMembers(): void {
+    console.log(JSON.stringify(this.partyMembers));
+  }
+
   public changeView(): void {
     this.addPartyMember = false;
     this.getPartyMembersFromIndexDB();
   }
 
   public editPartyMember(partyMember: DemonPartyMember) {
-    console.log(partyMember);
     this.selectedPartyMember = partyMember;
     this.addPartyMember = true;
     this.isToEditPartyMember = true;
