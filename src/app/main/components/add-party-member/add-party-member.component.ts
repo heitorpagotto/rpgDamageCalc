@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DemonServiceService } from 'src/app/services/demon-service.service';
@@ -37,8 +37,8 @@ export class AddPartyMemberComponent implements OnInit {
   ];
   public selectedSkill: Skill | undefined;
 
-  public partyMemberForm: FormGroup;
-  public statsForm: FormGroup;
+  public partyMemberForm: UntypedFormGroup;
+  public statsForm: UntypedFormGroup;
   constructor(
     public dialog: MatDialog,
     private demonService: DemonServiceService,
@@ -105,30 +105,30 @@ export class AddPartyMemberComponent implements OnInit {
   }
 
   initForm(model: DemonPartyMember): void {
-    this.partyMemberForm = new FormGroup({
-      id: new FormControl(model.id),
-      name: new FormControl(model.name, [Validators.required]),
-      nickname: new FormControl(model.nickname),
-      level: new FormControl(model.level, [Validators.required]),
-      currentEXP: new FormControl(model.currentEXP, [Validators.required]),
-      totalEXP: new FormControl(model.totalEXP, [Validators.required]),
-      currentHP: new FormControl(model.currentHP, [Validators.required]),
-      totalHP: new FormControl(model.totalHP, [Validators.required]),
-      currentMP: new FormControl(model.currentMP, [Validators.required]),
-      totalMP: new FormControl(model.totalMP, [Validators.required]),
-      stats: new FormControl(model.stats, [Validators.required]),
-      skills: new FormControl(model.skills, [Validators.required]),
-      race: new FormControl(model.race, [Validators.required]),
+    this.partyMemberForm = new UntypedFormGroup({
+      id: new UntypedFormControl(model.id),
+      name: new UntypedFormControl(model.name, [Validators.required]),
+      nickname: new UntypedFormControl(model.nickname),
+      level: new UntypedFormControl(model.level, [Validators.required]),
+      currentEXP: new UntypedFormControl(model.currentEXP, [Validators.required]),
+      totalEXP: new UntypedFormControl(model.totalEXP, [Validators.required]),
+      currentHP: new UntypedFormControl(model.currentHP, [Validators.required]),
+      totalHP: new UntypedFormControl(model.totalHP, [Validators.required]),
+      currentMP: new UntypedFormControl(model.currentMP, [Validators.required]),
+      totalMP: new UntypedFormControl(model.totalMP, [Validators.required]),
+      stats: new UntypedFormControl(model.stats, [Validators.required]),
+      skills: new UntypedFormControl(model.skills, [Validators.required]),
+      race: new UntypedFormControl(model.race, [Validators.required]),
     });
   }
 
   initStatsForm(model: DemonStats): void {
-    this.statsForm = new FormGroup({
-      ST: new FormControl(model.ST, [Validators.required]),
-      MA: new FormControl(model.MA, [Validators.required]),
-      EN: new FormControl(model.EN, [Validators.required]),
-      AG: new FormControl(model.AG, [Validators.required]),
-      LU: new FormControl(model.LU, [Validators.required]),
+    this.statsForm = new UntypedFormGroup({
+      ST: new UntypedFormControl(model.ST, [Validators.required]),
+      MA: new UntypedFormControl(model.MA, [Validators.required]),
+      EN: new UntypedFormControl(model.EN, [Validators.required]),
+      AG: new UntypedFormControl(model.AG, [Validators.required]),
+      LU: new UntypedFormControl(model.LU, [Validators.required]),
     });
   }
 

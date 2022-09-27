@@ -1,7 +1,7 @@
 import { BUFFS } from './../../../../shared/constants/BUFFS';
 import { SKILL_LEVELS } from './../../../../shared/constants/SKILL_LEVELS';
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -18,40 +18,40 @@ import { AccuracyResult } from 'src/app/services/accuracy.service';
 export class MainComponent {
   attackResults = '';
 
-  selectedType = new FormControl(1, Validators.required);
+  selectedType = new UntypedFormControl(1, Validators.required);
 
   selectedSkillLvl = 6;
-  playerLevel = new FormControl(1, [
+  playerLevel = new UntypedFormControl(1, [
     Validators.min(1),
     Validators.max(256),
     Validators.required,
   ]);
 
-  playerAttackStat = new FormControl(1, [
+  playerAttackStat = new UntypedFormControl(1, [
     Validators.min(1),
     Validators.max(40),
     Validators.required,
   ]);
 
-  playerHP = new FormControl(1, [
+  playerHP = new UntypedFormControl(1, [
     Validators.min(1),
     Validators.max(999),
     Validators.required,
   ]);
 
-  playerAgility = new FormControl(1, [
+  playerAgility = new UntypedFormControl(1, [
     Validators.min(1),
     Validators.max(40),
     Validators.required,
   ]);
 
-  playerLuck = new FormControl(1, [
+  playerLuck = new UntypedFormControl(1, [
     Validators.min(1),
     Validators.max(40),
     Validators.required,
   ]);
 
-  enemyQnty = new FormControl(1, [Validators.min(1), Validators.required]);
+  enemyQnty = new UntypedFormControl(1, [Validators.min(1), Validators.required]);
 
   @ViewChild('damageOutput')
   damageOutput!: ElementRef<HTMLElement>;

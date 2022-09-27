@@ -1,6 +1,6 @@
 import { ManagePartyMemberXpComponent } from './../manage-party-member-xp/manage-party-member-xp.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSelectionList } from '@angular/material/list';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -29,7 +29,7 @@ export class CombatComponent implements OnInit {
   public buffs = BUFFS;
   public debuffs = DEBUFFS;
 
-  public combatDamageForm: FormGroup;
+  public combatDamageForm: UntypedFormGroup;
 
   @ViewChild('skills') skills: MatSelectionList;
 
@@ -68,15 +68,15 @@ export class CombatComponent implements OnInit {
   }
 
   private initForm(model: PhysicalAttackRequest): void {
-    this.combatDamageForm = new FormGroup({
-      player: new FormControl(model.player),
-      skill: new FormControl(model.skill),
-      isFocus: new FormControl(model.isFocus),
-      isMultiple: new FormControl(model.isMultiple),
-      isWeakness: new FormControl(model.isWeakness),
-      enemyQuantity: new FormControl(model.enemyQuantity),
-      buffs: new FormControl(model.buffs),
-      debuffs: new FormControl(model.debuffs),
+    this.combatDamageForm = new UntypedFormGroup({
+      player: new UntypedFormControl(model.player),
+      skill: new UntypedFormControl(model.skill),
+      isFocus: new UntypedFormControl(model.isFocus),
+      isMultiple: new UntypedFormControl(model.isMultiple),
+      isWeakness: new UntypedFormControl(model.isWeakness),
+      enemyQuantity: new UntypedFormControl(model.enemyQuantity),
+      buffs: new UntypedFormControl(model.buffs),
+      debuffs: new UntypedFormControl(model.debuffs),
     });
   }
 
