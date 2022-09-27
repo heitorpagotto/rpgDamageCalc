@@ -30,6 +30,8 @@ import {
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CombatComponent } from './components/combat/combat.component';
 import { ManagePartyMemberXpComponent } from './components/manage-party-member-xp/manage-party-member-xp.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 const materialImports = [
   MatRippleModule,
@@ -48,6 +50,8 @@ const materialImports = [
   MatCardModule,
   MatSnackBarModule,
   MatProgressBarModule,
+  MatToolbarModule,
+  MatSidenavModule,
 ];
 
 @NgModule({

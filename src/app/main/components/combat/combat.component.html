@@ -123,12 +123,13 @@
       <div class="section">
         <div class="section-content">
           <div class="flex-container flex-column">
-            <mat-checkbox formControlName="isWeakness"
-              [disabled]="skills.selectedOptions.selected[0]?.value.skillType !== 3">
+            <mat-checkbox formControlName="isWeakness" [disabled]="
+              skills.selectedOptions.selected[0] ? skills.selectedOptions.selected[0].value.skillType !== 3 : false">
               Weakness
             </mat-checkbox>
             <mat-checkbox formControlName="isFocus">
-              {{skills.selectedOptions.selected[0]?.value.skillType === 3 ? 'Mind Charge' : 'Focus'}}
+              {{skills.selectedOptions.selected[0] ? skills.selectedOptions.selected[0].value.skillType === 3 ?
+              'Mind Charge' : 'Focus' : 'Focus'}}
             </mat-checkbox>
             <mat-checkbox formControlName="isMultiple">
               Multi-target
@@ -210,15 +211,17 @@
 </div>
 
 <div *ngIf="attackResult" class="attack-results">
-  <div style="margin-bottom: 1rem">
+  <div style="margin-bottom: 10rem">
     <span>
       {{attackResult.attackStatus}}
     </span>
     <span *ngIf="attackResult.isCritical">CRITICAL</span>
     <span *ngIf="attackResult.weakness">WEAK</span>
-    <span *ngIf="attackResult.missAttack">
-      MISS
-    </span>
+    <div class="missed-attack" *ngIf="attackResult.missAttack">
+      <span>
+        MISS
+      </span>
+    </div>
   </div>
   <button mat-raised-button color="accent" (click)="returnToDemonList()">OK</button>
 </div>

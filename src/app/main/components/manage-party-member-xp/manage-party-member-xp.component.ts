@@ -11,7 +11,9 @@ export class ManagePartyMemberXpComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: { currentXP: number; totalXP: number }
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('initialized!');
+  }
 
   //TODO: implement exp and level up system
 }
