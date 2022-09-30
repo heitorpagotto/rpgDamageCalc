@@ -22,6 +22,10 @@ body {
   height: 100%;
 }
 
+.w-100 {
+  width: 100%;
+}
+
 .p-1 {
   padding: 1rem;
 }
@@ -73,7 +77,6 @@ body {
 .header_container {
   display: flex;
   justify-content: flex-end;
-  padding: 1rem;
 }
 
 .justify-between {
@@ -140,4 +143,8 @@ body {
 
 .spacer {
   flex: 1 1 auto;
+}
+
+.text-end {
+  text-align: end;
 }

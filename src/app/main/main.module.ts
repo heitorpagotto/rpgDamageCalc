@@ -1,3 +1,4 @@
+import { DamageCalculatorComponent } from './components/damage-calculator/damage-calculator.component';
 import { MainComponent } from './components/main/main.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -61,6 +62,7 @@ const materialImports = [
     AddPartyMemberComponent,
     AddMemberSkillComponent,
     PartyMembersListingComponent,
+    DamageCalculatorComponent,
     ManagePartyMemberXpComponent,
     CombatComponent,
   ],

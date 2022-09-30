@@ -6,9 +6,16 @@
   </div>
 </ng-container>
 <ng-container *ngIf="!addPartyMember">
-  <div class="header_container">
-    <button mat-flat-button (click)="downloadPartyMembers()">Download Party</button>
-    <button mat-flat-button>Upload Party</button>
+  <div class="text-end">
+    <button mat-flat-button (click)="downloadPartyMembers()" class="mr-1">
+      <mat-icon>file_download</mat-icon>
+      Download Party
+    </button>
+    <button mat-flat-button class="mr-1" (click)="file.click()">
+      <mat-icon>file_upload</mat-icon>
+      Upload Party
+      <input type="file" hidden #file (change)="uploadPartyMembers($event)">
+    </button>
     <button mat-fab color="primary"
       (click)="selectedPartyMember = undefined; isToEditPartyMember = false; addPartyMember = true"
       title="Add a Party Member">

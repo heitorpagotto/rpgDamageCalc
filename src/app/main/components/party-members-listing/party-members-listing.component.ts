@@ -43,7 +43,36 @@ export class PartyMembersListingComponent implements OnInit {
   }
 
   public downloadPartyMembers(): void {
-    console.log(JSON.stringify(this.partyMembers));
+    const demonParty = JSON.stringify(this.partyMembers);
+    const hyperlink = document.createElement('a');
+    hyperlink.setAttribute(
+      'href',
+      'data:text/json;charset=UTF-8,' + encodeURIComponent(demonParty)
+    );
+    hyperlink.setAttribute('download', 'demon_party.json');
+    hyperlink.style.display = 'none';
+    document.body.appendChild(hyperlink);
+    hyperlink.click();
+    document.body.removeChild(hyperlink);
+  }
+
+  public uploadPartyMembers($event: any): void {
+    const selectedFile = $event.target.files[0];
+    const fileReader = new FileReader();
+    fileReader.readAsText(selectedFile, 'UTF-8');
+    fileReader.onload = () => {
+      const jsonInfo = JSON.parse(
+        fileReader.result ? fileReader.result.toString() : '[]'
+      );
+
+      jsonInfo.forEach(async (x: DemonPartyMember) => {
+        await this.demonService.insertDemon(x).toPromise();
+      });
+      this.getPartyMembersFromIndexDB();
+    };
+    fileReader.onerror = (error) => {
+      console.log(error);
+    };
   }
 
   public changeView(): void {
