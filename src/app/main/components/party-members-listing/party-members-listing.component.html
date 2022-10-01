@@ -6,31 +6,52 @@
   </div>
 </ng-container>
 <ng-container *ngIf="!addPartyMember">
-  <div class="text-end">
-    <button mat-flat-button (click)="downloadPartyMembers()" class="mr-1">
-      <mat-icon>file_download</mat-icon>
-      Download Party
-    </button>
-    <button mat-flat-button class="mr-1" (click)="file.click()">
-      <mat-icon>file_upload</mat-icon>
-      Upload Party
-      <input type="file" hidden #file (change)="uploadPartyMembers($event)">
-    </button>
-    <button mat-fab color="primary"
-      (click)="selectedPartyMember = undefined; isToEditPartyMember = false; addPartyMember = true"
-      title="Add a Party Member">
-      <mat-icon>add</mat-icon>
-    </button>
+  <div class="flex-container justify-between align-items-center">
+    <h3>
+      <b>
+        PARTY MEMBERS
+      </b>
+    </h3>
+    <ng-container *ngIf="isSmall">
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item
+          (click)="selectedPartyMember = undefined; isToEditPartyMember = false; addPartyMember = true">Add Party
+          Member</button>
+        <button mat-menu-item (click)="downloadPartyMembers()">Download Party</button>
+        <button mat-menu-item (click)="file.click()">Upload Party</button>
+      </mat-menu>
+    </ng-container>
+    <ng-container *ngIf="!isSmall">
+      <div>
+        <button mat-flat-button (click)="downloadPartyMembers()" class="mr-1">
+          <mat-icon>file_download</mat-icon>
+          Download Party
+        </button>
+        <button mat-flat-button class="mr-1" (click)="file.click()">
+          <mat-icon>file_upload</mat-icon>
+          Upload Party
+        </button>
+        <button mat-fab color="primary"
+          (click)="selectedPartyMember = undefined; isToEditPartyMember = false; addPartyMember = true"
+          title="Add a Party Member">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </ng-container>
+    <input type="file" hidden #file accept="application/json" (change)="uploadPartyMembers($event)">
   </div>
   <ng-container *ngIf="partyMembers.length === 0">
-    <div class="text-center" t>
+    <div class="text-center">
       <span>
         No Party Members
       </span>
     </div>
   </ng-container>
-  <div style="margin: 0.5rem 0;" *ngFor="let member of partyMembers">
-    <mat-card>
+  <div class="card_container">
+    <mat-card *ngFor="let member of partyMembers">
       <div class="flex-container information">
         <div class="">
           <div>
@@ -96,11 +117,11 @@
       <div class="flex-container" style="margin-top: 1rem">
         <button mat-flat-button (click)="editPartyMember(member)">
           <mat-icon>edit</mat-icon>
-          Edit Party Member
+          Edit
         </button>
         <button mat-flat-button (click)="deletePartyMember(member.id!)">
           <mat-icon>delete</mat-icon>
-          Delete Party Member
+          Delete
         </button>
       </div>
     </mat-card>

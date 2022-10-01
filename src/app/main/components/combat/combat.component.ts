@@ -1,9 +1,9 @@
-import { ManagePartyMemberXpComponent } from './../manage-party-member-xp/manage-party-member-xp.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
-  UntypedFormGroup,
+  FormControl,
+  FormGroup,
   UntypedFormControl,
-  Validators,
+  UntypedFormGroup,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSelectionList } from '@angular/material/list';
@@ -18,6 +18,7 @@ import {
   DemonPartyMember,
   PhysicalAttackRequest,
 } from 'src/shared/models/all-models';
+import { ManagePartyMemberXpComponent } from './../manage-party-member-xp/manage-party-member-xp.component';
 
 @Component({
   selector: 'app-combat',
@@ -29,6 +30,8 @@ export class CombatComponent implements OnInit {
   public selectedMember?: DemonPartyMember;
 
   public attackResult?: AttackResponse;
+
+  public attackResults?: AttackResponse[];
 
   public buffs = BUFFS;
   public debuffs = DEBUFFS;
@@ -65,22 +68,22 @@ export class CombatComponent implements OnInit {
     });
   }
 
-  public openXPModal(currentXP: number, totalXP: number): void {
+  public openXPModal(partyMember: DemonPartyMember): void {
     this._modal.open(ManagePartyMemberXpComponent, {
-      data: { currentXP: currentXP, totalXP: totalXP },
+      data: partyMember,
     });
   }
 
   private initForm(model: PhysicalAttackRequest): void {
-    this.combatDamageForm = new UntypedFormGroup({
-      player: new UntypedFormControl(model.player),
-      skill: new UntypedFormControl(model.skill),
-      isFocus: new UntypedFormControl(model.isFocus),
-      isMultiple: new UntypedFormControl(model.isMultiple),
-      isWeakness: new UntypedFormControl(model.isWeakness),
-      enemyQuantity: new UntypedFormControl(model.enemyQuantity),
-      buffs: new UntypedFormControl(model.buffs),
-      debuffs: new UntypedFormControl(model.debuffs),
+    this.combatDamageForm = new FormGroup({
+      player: new FormControl(model.player),
+      skill: new FormControl(model.skill),
+      isFocus: new FormControl(model.isFocus),
+      isMultiple: new FormControl(model.isMultiple),
+      isWeakness: new FormControl(model.isWeakness),
+      enemyQuantity: new FormControl(model.enemyQuantity),
+      buffs: new FormControl(model.buffs),
+      debuffs: new FormControl(model.debuffs),
     });
   }
 
@@ -98,8 +101,13 @@ export class CombatComponent implements OnInit {
       if (fullValue.skill === null || fullValue.skill === undefined) {
         this._snackBar.open('Select a skill.');
       } else {
-        this.attackResult = this.attackService.attack(fullValue);
-        // TODO: show attack result animation and redirect the user to the demon select page
+        if (fullValue.isMultiple) {
+          for (let i = 0; i < fullValue.enemyQuantity; i++) {
+            this.attackResults?.push(this.attackService.attack(fullValue));
+          }
+        } else {
+          this.attackResult = this.attackService.attack(fullValue);
+        }
       }
     } else {
       this.combatDamageForm.markAllAsTouched();

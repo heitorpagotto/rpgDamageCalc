@@ -53,6 +53,7 @@ const materialImports = [
   MatProgressBarModule,
   MatToolbarModule,
   MatSidenavModule,
+  MatMenuModule,
 ];
 
 @NgModule({

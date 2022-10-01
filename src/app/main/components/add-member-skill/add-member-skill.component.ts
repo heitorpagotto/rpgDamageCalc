@@ -7,7 +7,12 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  FormControl,
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SKILL_ELEMENT_TYPES } from 'src/shared/constants/SKILL_ELEMENTS';
 import { SKILL_LEVELS } from 'src/shared/constants/SKILL_LEVELS';
@@ -53,16 +58,16 @@ export class AddMemberSkillComponent implements OnInit {
 
   initForm(model: Skill) {
     this.skillForm = new UntypedFormGroup({
-      id: new UntypedFormControl(model.id),
-      name: new UntypedFormControl(model.name, [Validators.required]),
-      description: new UntypedFormControl(model.description, [Validators.required]),
-      diceRollLevel: new UntypedFormControl(model.diceRollLevel, [
+      id: new FormControl(model.id),
+      name: new FormControl(model.name, [Validators.required]),
+      description: new FormControl(model.description, [Validators.required]),
+      diceRollLevel: new FormControl(model.diceRollLevel, [
         Validators.required,
       ]),
-      cost: new UntypedFormControl(model.cost, [Validators.required]),
-      skillType: new UntypedFormControl(model.skillType, [Validators.required]),
-      skillElement: new UntypedFormControl(model.skillElement, [Validators.required]),
-      skillPower: new UntypedFormControl(model.skillPower, [Validators.required]),
+      cost: new FormControl(model.cost, [Validators.required]),
+      skillType: new FormControl(model.skillType, [Validators.required]),
+      skillElement: new FormControl(model.skillElement, [Validators.required]),
+      skillPower: new FormControl(model.skillPower, [Validators.required]),
     });
   }
 

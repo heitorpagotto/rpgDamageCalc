@@ -1,5 +1,8 @@
 <div class="flex-container flex-column h-100">
   <mat-toolbar>
+    <button *ngIf="!shouldStayOpen" mat-icon-button (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
     <span [routerLink]="['']">RPG Damage Calculator</span>
     <div class="spacer"></div>
     <div>
@@ -12,8 +15,8 @@
       </button>
     </div>
   </mat-toolbar>
-  <mat-drawer-container class="h-100">
-    <mat-drawer mode="side" opened>
+  <mat-drawer-container class="h-100" [hasBackdrop]="!shouldStayOpen">
+    <mat-drawer #drawer [mode]="shouldStayOpen ? 'side' : 'over'" [opened]="shouldStayOpen">
       <mat-nav-list>
         <mat-list-item [routerLink]="['/party']">
           Party

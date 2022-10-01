@@ -1,15 +1,32 @@
-<h1 mat-dialog-title>Gerenciar XP</h1>
-<div style="margin-bottom: 1rem">
-  <span>{{data.currentXP}}/{{data.totalXP}}</span>
-  <mat-progress-bar color="accent" [value]="(data.currentXP * 100) / data.totalXP"></mat-progress-bar>
-</div>
-<div>
-  <mat-form-field appearance="outline" color="accent">
-    <mat-label>Quantidade de XP ganha</mat-label>
-    <input type="number" matInput>
-  </mat-form-field>
-</div>
-<div class="text-center">
-  <button mat-button mat-dialog-close>Cancelar</button>
-  <button mat-raised-button color="accent">Adicionar</button>
-</div>
+<ng-container>
+  <h1 mat-dialog-title>Manage EXP</h1>
+  <div style="margin-bottom: 1rem">
+    <span>{{data.currentEXP}}/{{data.totalEXP}}</span>
+    <mat-progress-bar color="accent" [value]="progressBarValue"></mat-progress-bar>
+  </div>
+  <div>
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>EXP Quantity</mat-label>
+      <input type="number" matInput [(ngModel)]="experienceNumber">
+    </mat-form-field>
+  </div>
+  <div class="text-center">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-raised-button color="accent" (click)="AddEXP()">Adicionar</button>
+  </div>
+</ng-container>
+<ng-container>
+  <h1 mat-dialog-title>LEVEL UP!!</h1>
+  <div style="margin-bottom: 1rem">
+    <span>{{data.currentEXP}}/{{data.totalEXP}}</span>
+    <mat-progress-bar color="accent" [value]="progressBarValue"></mat-progress-bar>
+  </div>
+  <div>
+    <span>You have {{statNumber}} skill points. Select the stat that you want to upgrade!</span>
+    <app-stat-counter statLabel="ST" [statValue]="this.data.stats.ST"></app-stat-counter>
+  </div>
+  <div class="text-center">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-raised-button color="accent" (click)="AddEXP()">Adicionar</button>
+  </div>
+</ng-container>

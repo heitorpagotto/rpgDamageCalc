@@ -42,6 +42,10 @@ body {
   align-items: center;
 }
 
+.justify-between {
+  justify-content: space-between;
+}
+
 .actual-damage {
   font-size: 38px;
   user-select: none;
@@ -92,7 +96,7 @@ body {
   padding: 0 0.5rem;
 }
 
-.content_row * {
+.content_row mat-form-field {
   width: 100%;
 }
 

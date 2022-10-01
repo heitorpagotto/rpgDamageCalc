@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DemonServiceService } from 'src/app/services/demon-service.service';
 import { DemonPartyMember } from 'src/shared/models/all-models';
@@ -84,5 +84,10 @@ export class PartyMembersListingComponent implements OnInit {
     this.selectedPartyMember = partyMember;
     this.addPartyMember = true;
     this.isToEditPartyMember = true;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  get isSmall(): boolean {
+    return window.innerWidth < 1000;
   }
 }

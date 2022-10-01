@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconRegistry } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -43,5 +43,10 @@ export class MainComponent {
 
   openPartyMemberDialog(): void {
     this.dialog.open(AddPartyMemberComponent, {});
+  }
+
+  @HostListener('window:resize', ['$event'])
+  get shouldStayOpen(): boolean {
+    return !(window.innerWidth < 1000);
   }
 }

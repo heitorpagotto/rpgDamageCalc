@@ -65,7 +65,7 @@
       </div>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-flat-button style="width: 100%" (click)="openXPModal(party.currentEXP,party.totalEXP)">
+      <button mat-flat-button style="width: 100%" (click)="openXPModal(party)">
         <mat-icon>add</mat-icon>
         Add EXP
       </button>
@@ -210,18 +210,16 @@
   </div>
 </div>
 
-<div *ngIf="attackResult" class="attack-results">
-  <div style="margin-bottom: 10rem">
-    <span class="dmg-animated">
+<div *ngIf="attackResult" class="text-center">
+  <div class="attack-results">
+    <p class="damage">
       {{attackResult.attackStatus}}
-    </span>
-    <span *ngIf="attackResult.isCritical">CRITICAL</span>
-    <span *ngIf="attackResult.weakness">WEAK</span>
-    <div class="missed-attack" *ngIf="attackResult.missAttack">
-      <span>
-        MISS
-      </span>
-    </div>
+    </p>
+    <p *ngIf="attackResult.isCritical" class="critical">CRITICAL</p>
+    <p *ngIf="attackResult.weakness" class="weak">WEAK</p>
+    <p class="missed-attack" *ngIf="attackResult.missAttack">
+      MISS
+    </p>
   </div>
   <button mat-raised-button color="accent" (click)="returnToDemonList()">OK</button>
 </div>
