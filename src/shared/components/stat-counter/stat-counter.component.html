@@ -1,10 +1,12 @@
-<span>{{statLabel}}</span>
-<div>
-  <button mat-icon-button (click)="StatValueChange('minus')">
-    <mat-icon>remove</mat-icon>
-  </button>
-  <span>{{statValue}}</span>
-  <button mat-icon-button (click)="StatValueChange('plus')">
-    <mat-icon>add</mat-icon>
-  </button>
+<div class="flex-container align-items-center justify-center">
+  <span style="font-weight: 600; margin-right: 1rem;">{{statLabel}}</span>
+  <div>
+    <button mat-icon-button [disabled]="shoudDisableRemoveButton" (click)="StatValueChange('minus')">
+      <mat-icon>remove</mat-icon>
+    </button>
+    <span>{{currentStat}}</span>
+    <button mat-icon-button [disabled]="shoudDisableAddButton || disableAddButton" (click)="StatValueChange('plus')">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
 </div>

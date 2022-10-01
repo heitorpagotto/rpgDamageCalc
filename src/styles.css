@@ -46,6 +46,10 @@ body {
   justify-content: space-between;
 }
 
+.justify-center {
+  justify-content: center;
+}
+
 .actual-damage {
   font-size: 38px;
   user-select: none;

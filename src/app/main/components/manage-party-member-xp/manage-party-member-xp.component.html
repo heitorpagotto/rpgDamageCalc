@@ -1,4 +1,4 @@
-<ng-container>
+<ng-container *ngIf="!shouldShowLevelUp">
   <h1 mat-dialog-title>Manage EXP</h1>
   <div style="margin-bottom: 1rem">
     <span>{{data.currentEXP}}/{{data.totalEXP}}</span>
@@ -15,7 +15,7 @@
     <button mat-raised-button color="accent" (click)="AddEXP()">Adicionar</button>
   </div>
 </ng-container>
-<ng-container>
+<ng-container *ngIf="shouldShowLevelUp">
   <h1 mat-dialog-title>LEVEL UP!!</h1>
   <div style="margin-bottom: 1rem">
     <span>{{data.currentEXP}}/{{data.totalEXP}}</span>
@@ -23,10 +23,15 @@
   </div>
   <div>
     <span>You have {{statNumber}} skill points. Select the stat that you want to upgrade!</span>
-    <app-stat-counter statLabel="ST" [statValue]="this.data.stats.ST"></app-stat-counter>
+    <div class="p-1 text-center">
+      <app-stat-counter statLabel="ST" [statValue]="this.data.stats.ST"></app-stat-counter>
+      <app-stat-counter statLabel="MA" [statValue]="this.data.stats.MA"></app-stat-counter>
+      <app-stat-counter statLabel="EN" [statValue]="this.data.stats.EN"></app-stat-counter>
+      <app-stat-counter statLabel="AG" [statValue]="this.data.stats.AG"></app-stat-counter>
+      <app-stat-counter statLabel="LU" [statValue]="this.data.stats.LU"></app-stat-counter>
+    </div>
   </div>
   <div class="text-center">
-    <button mat-button mat-dialog-close>Cancelar</button>
-    <button mat-raised-button color="accent" (click)="AddEXP()">Adicionar</button>
+    <button mat-raised-button color="accent" mat-dialog-close>Concluir</button>
   </div>
 </ng-container>

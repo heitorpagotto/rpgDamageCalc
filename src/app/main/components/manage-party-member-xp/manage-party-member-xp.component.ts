@@ -27,15 +27,30 @@ export class ManagePartyMemberXpComponent implements OnInit {
     console.log(this.data);
   }
 
-  public async AddEXP(): Promise<void> {
-    let expDifference = this.experienceNumber - this.data.currentEXP;
-
+  public AddEXP(): void {
     const summedXP = this.data.currentEXP + this.experienceNumber;
-    while (summedXP > this.data.totalEXP) {
-      this.data.level++;
-      this.statNumber++;
-      this.data.totalEXP = this.data.totalEXP * 1.5;
-      this.data.currentEXP = expDifference;
+    if (summedXP < this.data.totalEXP) {
+      this.data.currentEXP = summedXP;
+    } else {
+      while (summedXP >= this.data.totalEXP) {
+        let expDifference = summedXP - this.data.totalEXP;
+        this.shouldShowLevelUp = true;
+        this.data.level++;
+        this.statNumber++;
+        this.data.currentEXP = 0;
+        this.data.totalEXP = Math.round(this.data.totalEXP * 1.5);
+        if (expDifference >= 0) {
+          this.data.currentEXP = expDifference;
+        }
+      }
     }
+  }
+
+  public HandleStatDistribution($event: number): void {
+    this.statNumber;
+  }
+
+  public get usedAvaliableStats(): boolean {
+    return this.statNumber === 0;
   }
 }
