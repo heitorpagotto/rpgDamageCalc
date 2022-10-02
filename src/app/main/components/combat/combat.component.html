@@ -1,4 +1,11 @@
-<div class="main_content p-1" *ngIf="!selectedMember">
+<div class="flex-container justify-between align-items-center">
+  <h3>
+    <b>
+      COMBAT
+    </b>
+  </h3>
+</div>
+<div class="main_content" *ngIf="!selectedMember">
   <mat-card *ngFor="let party of partyMembers">
     <mat-card-content mat-ripple (click)="selectDemon(party)">
       <div class="flex-container information">

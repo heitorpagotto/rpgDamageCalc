@@ -24,11 +24,21 @@
   <div>
     <span>You have {{statNumber}} skill points. Select the stat that you want to upgrade!</span>
     <div class="p-1 text-center">
-      <app-stat-counter statLabel="ST" [statValue]="this.data.stats.ST"></app-stat-counter>
-      <app-stat-counter statLabel="MA" [statValue]="this.data.stats.MA"></app-stat-counter>
-      <app-stat-counter statLabel="EN" [statValue]="this.data.stats.EN"></app-stat-counter>
-      <app-stat-counter statLabel="AG" [statValue]="this.data.stats.AG"></app-stat-counter>
-      <app-stat-counter statLabel="LU" [statValue]="this.data.stats.LU"></app-stat-counter>
+      <app-stat-counter statLabel="ST" (statValueChangeType)="HandleStatDistribution($event)"
+        (statValueChange)="HandleStatValueDistribution('ST', $event)" [disableAddButton]="usedAvaliableStats"
+        [statValue]="this.data.stats.ST"></app-stat-counter>
+      <app-stat-counter statLabel="MA" (statValueChangeType)="HandleStatDistribution($event)"
+        (statValueChange)="HandleStatValueDistribution('MA', $event)" [disableAddButton]="usedAvaliableStats"
+        [statValue]="this.data.stats.MA"></app-stat-counter>
+      <app-stat-counter statLabel="EN" (statValueChange)="HandleStatValueDistribution('EN', $event)"
+        (statValueChangeType)="HandleStatDistribution($event)" [disableAddButton]="usedAvaliableStats"
+        [statValue]="this.data.stats.EN"></app-stat-counter>
+      <app-stat-counter statLabel="AG" (statValueChange)="HandleStatValueDistribution('AG', $event)"
+        (statValueChangeType)="HandleStatDistribution($event)" [disableAddButton]="usedAvaliableStats"
+        [statValue]="this.data.stats.AG"></app-stat-counter>
+      <app-stat-counter statLabel="LU" (statValueChangeType)="HandleStatDistribution($event)"
+        [disableAddButton]="usedAvaliableStats" (statValueChange)="HandleStatValueDistribution('LU', $event)"
+        [statValue]="this.data.stats.LU"></app-stat-counter>
     </div>
   </div>
   <div class="text-center">
