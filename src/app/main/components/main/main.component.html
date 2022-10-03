@@ -1,11 +1,23 @@
 <div class="flex-container flex-column h-100">
   <mat-toolbar>
-    <button *ngIf="!shouldStayOpen" mat-icon-button (click)="drawer.toggle()">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <span [routerLink]="['']">RPG Damage Calculator</span>
-    <div class="spacer"></div>
-    <div>
+    <mat-toolbar-row>
+      <button *ngIf="!shouldStayOpen()" mat-icon-button (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span [routerLink]="['']">RPG Damage Calculator</span>
+      <span class="spacer"></span>
+      <div *ngIf="!isXSmall()">
+        <a mat-icon-button href="https://github.com/heitorpagotto/rpgDamageCalc" target="_blank"
+          title="Visit the Github Page">
+          <mat-icon svgIcon="github"></mat-icon>
+        </a>
+        <button mat-icon-button (click)="openConfigDialog()" title="Open Settings">
+          <mat-icon>settings</mat-icon>
+        </button>
+      </div>
+    </mat-toolbar-row>
+    <mat-toolbar-row *ngIf="isXSmall()">
+      <span class="spacer"></span>
       <a mat-icon-button href="https://github.com/heitorpagotto/rpgDamageCalc" target="_blank"
         title="Visit the Github Page">
         <mat-icon svgIcon="github"></mat-icon>
@@ -13,10 +25,10 @@
       <button mat-icon-button (click)="openConfigDialog()" title="Open Settings">
         <mat-icon>settings</mat-icon>
       </button>
-    </div>
+    </mat-toolbar-row>
   </mat-toolbar>
-  <mat-drawer-container class="h-100" [hasBackdrop]="!shouldStayOpen">
-    <mat-drawer #drawer [mode]="shouldStayOpen ? 'side' : 'over'" [opened]="shouldStayOpen">
+  <mat-drawer-container class="h-100" [hasBackdrop]="!shouldStayOpen()">
+    <mat-drawer #drawer [mode]="shouldStayOpen() ? 'side' : 'over'" [opened]="shouldStayOpen()">
       <mat-nav-list>
         <mat-list-item [routerLink]="['/party']">
           Party

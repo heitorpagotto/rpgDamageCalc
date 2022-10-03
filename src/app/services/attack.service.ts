@@ -1,12 +1,12 @@
+import { Injectable } from '@angular/core';
+import { NgxIndexedDBService } from 'ngx-indexed-db';
+import { EElementTypes } from 'src/shared/models/all-enums';
 import {
   AttackResponse,
   PhysicalAttackRequest,
 } from './../../shared/models/all-models';
-import { Injectable } from '@angular/core';
 import { AccuracyService } from './accuracy.service';
 import { DamageService } from './damage.service';
-import { DemonServiceService } from './demon-service.service';
-import { NgxIndexedDBService } from 'ngx-indexed-db';
 
 @Injectable({
   providedIn: 'root',
@@ -33,51 +33,72 @@ export class AttackService {
     );
 
     let sound = new Audio();
-
-    if (accuracy !== 'miss') {
-      if (accuracy === 'critical' && model.skill.skillType !== 3) {
-        isCritical = true;
-        model.isCritical = true;
-        sound = new Audio('/assets/audio/crit.wav');
-      } else {
-        sound = new Audio('/assets/audio/atk.wav');
-      }
-
-      if (accuracy === 'ok_weak') {
-        sound = new Audio('/assets/audio/crit.wav');
-      }
-
-      switch (model.skill.skillType) {
-        case 1:
-          if (model.player.currentHP > model.skill.cost) {
-            model.player.currentHP -= model.skill.cost;
-            attackResults +=
-              '-' + this.damageService.calcPhysicalDamage(model) + 'HP';
-          }
-          break;
-        case 2:
-          if (model.player.currentHP > model.skill.cost) {
-            model.player.currentHP -= model.skill.cost;
-            attackResults +=
-              '-' + this.damageService.calcHpPhysicalDamage(model) + 'HP';
-          }
-          break;
-        case 3:
-          if (model.player.currentMP > model.skill.cost) {
-            model.player.currentMP -= model.skill.cost;
-            attackResults +=
-              '-' + this.damageService.calcMagicDamage(model) + 'HP';
-          }
-          break;
-      }
+    if (model.skill.skillElement === EElementTypes.Support) {
+      model.player.currentMP -= model.skill.cost;
     } else {
-      sound = new Audio('/assets/audio/miss.wav');
-      missedAttack = true;
-    }
+      if (accuracy !== 'miss') {
+        if (accuracy === 'critical' && model.skill.skillType !== 3) {
+          isCritical = true;
+          model.isCritical = true;
+          sound = new Audio('/assets/audio/crit.wav');
+        } else {
+          sound = new Audio('/assets/audio/atk.wav');
+        }
 
-    if (localStorage.getItem('sound_enabled') === 'true') {
-      sound.volume = Number(localStorage.getItem('sound_volume'));
-      sound.play();
+        if (accuracy === 'ok_weak') {
+          sound = new Audio('/assets/audio/crit.wav');
+        }
+
+        switch (model.skill.skillType) {
+          case 1:
+            if (model.player.currentHP > model.skill.cost) {
+              model.player.currentHP -= model.skill.cost;
+              attackResults +=
+                '-' + this.damageService.calcPhysicalDamage(model) + 'HP';
+            }
+            break;
+          case 2:
+            if (model.player.currentHP > model.skill.cost) {
+              model.player.currentHP -= model.skill.cost;
+              attackResults +=
+                '-' + this.damageService.calcHpPhysicalDamage(model) + 'HP';
+            }
+            break;
+          case 3:
+            if (model.player.currentMP > model.skill.cost) {
+              model.player.currentMP -= model.skill.cost;
+              attackResults +=
+                '-' + this.damageService.calcMagicDamage(model) + 'HP';
+            }
+            break;
+        }
+      } else {
+        sound = new Audio('/assets/audio/miss.wav');
+        missedAttack = true;
+
+        switch (model.skill.skillType) {
+          case 1:
+            if (model.player.currentHP > model.skill.cost) {
+              model.player.currentHP -= model.skill.cost;
+            }
+            break;
+          case 2:
+            if (model.player.currentHP > model.skill.cost) {
+              model.player.currentHP -= model.skill.cost;
+            }
+            break;
+          case 3:
+            if (model.player.currentMP > model.skill.cost) {
+              model.player.currentMP -= model.skill.cost;
+            }
+            break;
+        }
+      }
+
+      if (localStorage.getItem('sound_enabled') === 'true') {
+        sound.volume = Number(localStorage.getItem('sound_volume'));
+        sound.play();
+      }
     }
 
     this.dbService.update('party_member', model.player).toPromise();

@@ -87,7 +87,7 @@ export class PartyMembersListingComponent implements OnInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  get isSmall(): boolean {
+  isSmall(): boolean {
     return window.innerWidth < 1000;
   }
 }

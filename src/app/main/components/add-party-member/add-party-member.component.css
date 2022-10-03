@@ -11,3 +11,14 @@ mat-card span {
   font-weight: 300;
 }
 
+@media screen and (max-width: 1280px) {
+  .stat_row {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 885px) {
+  .content_row {
+    flex-direction: column;
+  }
+}

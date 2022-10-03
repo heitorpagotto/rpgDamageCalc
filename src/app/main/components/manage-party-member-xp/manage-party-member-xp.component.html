@@ -42,6 +42,6 @@
     </div>
   </div>
   <div class="text-center">
-    <button mat-raised-button color="accent" mat-dialog-close>Concluir</button>
+    <button mat-raised-button color="accent" [disabled]="statNumber > 0" mat-dialog-close>Concluir</button>
   </div>
 </ng-container>

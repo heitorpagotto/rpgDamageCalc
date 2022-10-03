@@ -46,7 +46,12 @@ export class MainComponent {
   }
 
   @HostListener('window:resize', ['$event'])
-  get shouldStayOpen(): boolean {
+  shouldStayOpen(): boolean {
     return !(window.innerWidth < 1000);
+  }
+
+  @HostListener('window:resize', ['$event'])
+  isXSmall(): boolean {
+    return window.innerWidth <= 350;
   }
 }

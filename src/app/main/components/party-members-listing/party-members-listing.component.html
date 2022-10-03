@@ -12,7 +12,7 @@
         PARTY MEMBERS
       </b>
     </h3>
-    <ng-container *ngIf="isSmall">
+    <ng-container *ngIf="isSmall()">
       <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>more_vert</mat-icon>
       </button>
@@ -24,7 +24,7 @@
         <button mat-menu-item (click)="file.click()">Upload Party</button>
       </mat-menu>
     </ng-container>
-    <ng-container *ngIf="!isSmall">
+    <ng-container *ngIf="!isSmall()">
       <div>
         <button mat-flat-button (click)="downloadPartyMembers()" class="mr-1">
           <mat-icon>file_download</mat-icon>

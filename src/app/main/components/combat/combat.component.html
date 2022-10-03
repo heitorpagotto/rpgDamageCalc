@@ -87,7 +87,7 @@
     </div>
   </ng-container>
 </div>
-<div class="text-center" *ngIf="!selectedMember">
+<div class="text-center p-1" *ngIf="!selectedMember">
   <button mat-flat-button (click)="getAllDemons()">
     <mat-icon>refresh</mat-icon>
     Refresh Demon List
@@ -105,9 +105,10 @@
   </div>
   <form [formGroup]="combatDamageForm">
     <div class="mat-elevation-z2" style="margin-bottom: 1rem">
-      <mat-selection-list #skills [multiple]="false">
-        <mat-list-option
-          [disabled]="skill.skillType !== 3 ? selectedMember.currentHP < skill.cost : selectedMember.currentMP < skill.cost"
+      <mat-selection-list #skills [multiple]="false" [(ngModel)]="selectedSkill" (ngModelChange)="selectSkill($event)"
+        [ngModelOptions]="{standalone: true}">
+        <mat-list-option [matTooltip]="skill.description" [matTooltipShowDelay]="500"
+          [disabled]="skill.skillType !== 3 ? selectedMember.currentHP < skill.cost : selectedMember.currentMP < skill.cost || skill.skillElement === 12"
           *ngFor="let skill of selectedMember.skills" [value]="skill">
           <div class="flex-container justify-between">
             <span>
@@ -130,12 +131,11 @@
       <div class="section">
         <div class="section-content">
           <div class="flex-container flex-column">
-            <mat-checkbox formControlName="isWeakness" [disabled]="
-              skills.selectedOptions.selected[0] ? skills.selectedOptions.selected[0].value.skillType !== 3 : false">
+            <mat-checkbox formControlName="isWeakness">
               Weakness
             </mat-checkbox>
             <mat-checkbox formControlName="isFocus">
-              {{skills.selectedOptions.selected[0] ? skills.selectedOptions.selected[0].value.skillType === 3 ?
+              {{selectedSkill && selectedSkill[0] ? selectedSkill[0].skillType === 3 ?
               'Mind Charge' : 'Focus' : 'Focus'}}
             </mat-checkbox>
             <mat-checkbox formControlName="isMultiple">
@@ -213,7 +213,9 @@
   </form>
 
   <div class="text-center p-1">
-    <button mat-raised-button color="primary" (click)="attack()">ATTACK</button>
+    <button mat-raised-button color="primary" (click)="attack()">
+      {{selectedSkill && selectedSkill[0] ? selectedSkill[0].skillElement === 11 ? 'APPLY':'ATTACK':'ATTACK'}}
+    </button>
   </div>
 </div>
 

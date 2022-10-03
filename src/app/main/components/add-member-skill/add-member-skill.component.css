@@ -1,0 +1,5 @@
+@media screen and (max-width: 840px) {
+  .content_row {
+    flex-direction: column;
+  }
+}

@@ -1,5 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DemonServiceService } from 'src/app/services/demon-service.service';
@@ -91,7 +95,7 @@ export class AddPartyMemberComponent implements OnInit {
   }
 
   editSkill(skill: Skill): void {
-    const index = this.skills.findIndex((x) => x.id === skill.id);
+    const index = this.skills.findIndex((x) => x.id === skill?.id);
     if (index > -1) {
       this.skills[index] = skill;
     }
@@ -110,7 +114,9 @@ export class AddPartyMemberComponent implements OnInit {
       name: new UntypedFormControl(model.name, [Validators.required]),
       nickname: new UntypedFormControl(model.nickname),
       level: new UntypedFormControl(model.level, [Validators.required]),
-      currentEXP: new UntypedFormControl(model.currentEXP, [Validators.required]),
+      currentEXP: new UntypedFormControl(model.currentEXP, [
+        Validators.required,
+      ]),
       totalEXP: new UntypedFormControl(model.totalEXP, [Validators.required]),
       currentHP: new UntypedFormControl(model.currentHP, [Validators.required]),
       totalHP: new UntypedFormControl(model.totalHP, [Validators.required]),
