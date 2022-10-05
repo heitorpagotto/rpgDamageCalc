@@ -33,6 +33,28 @@ export class Skill {
   skillType: ESkillTypes;
   skillElement: EElementTypes;
   skillPower: number;
+  passiveSkill?: PassiveSkill;
+}
+
+export class PassiveSkill {
+  name: string;
+  description: string;
+  effects: {
+    isMultiple?: boolean;
+    showDarkmightOptions?: boolean;
+    boostFireDmg?: boolean;
+    boostElecDmg?: boolean;
+    boostIceDmg?: boolean;
+    boostForceDmg?: boolean;
+    increaseMaxPercentHP?: number;
+    increaseMaxPercentMP?: number;
+    increaseCriticalAttacksBy?: number;
+  };
+}
+
+export class HealingSkill {
+  name: string;
+  healingPercent: string;
 }
 
 export class ModalSkillEdit {

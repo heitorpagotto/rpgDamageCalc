@@ -1,4 +1,6 @@
-export const PASSIVE_SKILLS = [
+import { PassiveSkill } from '../models/all-models';
+
+export const PASSIVE_SKILLS: PassiveSkill[] = [
   {
     name: 'Attack All',
     description: 'Normal physical attacks will hit all enemies',

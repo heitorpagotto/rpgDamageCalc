@@ -1,22 +1,10 @@
-import { ModalSkillEdit, Skill } from './../../../../shared/models/all-models';
-import {
-  Component,
-  EventEmitter,
-  Inject,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
-import {
-  FormControl,
-  UntypedFormControl,
-  UntypedFormGroup,
-  Validators,
-} from '@angular/forms';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SKILL_ELEMENT_TYPES } from 'src/shared/constants/SKILL_ELEMENTS';
 import { SKILL_LEVELS } from 'src/shared/constants/SKILL_LEVELS';
 import { SKILL_TYPES } from 'src/shared/constants/SKILL_TYPES';
+import { ModalSkillEdit, Skill } from './../../../../shared/models/all-models';
 
 @Component({
   selector: 'app-add-member-skill',
