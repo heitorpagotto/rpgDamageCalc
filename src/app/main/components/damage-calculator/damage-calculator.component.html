@@ -9,18 +9,18 @@
           <div class="item-row">
             <div class="pad">
               <mat-form-field color="accent" appearance="outline">
-                <mat-label>Tipo de Skill</mat-label>
+                <mat-label>Skill Type</mat-label>
                 <mat-select [formControl]="selectedType" required>
                   <mat-option *ngFor="let type of skillTypes" [value]="type.id">
                     {{type.name}}
                   </mat-option>
                 </mat-select>
-                <mat-error *ngIf="selectedType.hasError('required')">Selecione um tipo de Skill.</mat-error>
+                <mat-error *ngIf="selectedType.hasError('required')">Select a Skill Type.</mat-error>
               </mat-form-field>
             </div>
             <div class="pad">
               <mat-form-field color="accent" appearance="outline">
-                <mat-label>Nível da Skill</mat-label>
+                <mat-label>Skill Level</mat-label>
                 <mat-select [(value)]="selectedSkillLvl" required>
                   <mat-option *ngFor="let lvl of skillLevel" [value]="lvl.id">
                     {{lvl.name}}
@@ -38,7 +38,7 @@
           <div class="item-row">
             <div class="pad item-row">
               <mat-checkbox class="check-margin" [disabled]="selectedType.value !== 3" [(ngModel)]="isWeak">
-                Fraqueza
+                Weakness
               </mat-checkbox>
               <mat-checkbox class="check-margin" [(ngModel)]="isFocus">
                 {{selectedType.value === 3 ? 'Mind Charge' : 'Focus'}}
@@ -49,9 +49,9 @@
             </div>
             <div class="input-margin pad" *ngIf="isMulti">
               <mat-form-field appearance="legacy">
-                <mat-label>Quantidade de Inimigos</mat-label>
+                <mat-label>Enemy Quantity</mat-label>
                 <input [formControl]="enemyQnty" type="number" matInput>
-                <mat-error *ngIf="enemyQnty.hasError('required')">Este campo é obrigatório.</mat-error>
+                <mat-error *ngIf="enemyQnty.hasError('required')">This field is required.</mat-error>
                 <mat-error *ngIf="enemyQnty.hasError('min')">Número mínimo de inimigos é 1.</mat-error>
               </mat-form-field>
             </div>
@@ -70,18 +70,18 @@
               <mat-form-field color="accent" appearance="outline">
                 <mat-label>Level</mat-label>
                 <input matInput type="number" [formControl]="playerLevel" max="256" min="1">
-                <mat-error *ngIf="playerLevel.hasError('max')">Level Máximo é 256.</mat-error>
-                <mat-error *ngIf="playerLevel.hasError('min')">Level Mínimo é 1.</mat-error>
-                <mat-error *ngIf="playerLevel.hasError('required')">Este campo é Obrigatório.</mat-error>
+                <mat-error *ngIf="playerLevel.hasError('max')">Max Level is 256.</mat-error>
+                <mat-error *ngIf="playerLevel.hasError('min')">Mín Level is 1.</mat-error>
+                <mat-error *ngIf="playerLevel.hasError('required')">This field is required.</mat-error>
               </mat-form-field>
             </div>
             <div class="pad" *ngIf="selectedType.value === 2">
               <mat-form-field color="accent" appearance="outline">
-                <mat-label>HP Total</mat-label>
+                <mat-label>Total HP</mat-label>
                 <input matInput type="number" [formControl]="playerHP" max="999" min="1">
-                <mat-error *ngIf="playerHP.hasError('max')">HP Máximo é 999.</mat-error>
-                <mat-error *ngIf="playerHP.hasError('min')">HP Mínimo é 1.</mat-error>
-                <mat-error *ngIf="playerHP.hasError('required')">Este campo é Obrigatório.</mat-error>
+                <mat-error *ngIf="playerHP.hasError('max')">Max HP is 999.</mat-error>
+                <mat-error *ngIf="playerHP.hasError('min')">Min HP is 1.</mat-error>
+                <mat-error *ngIf="playerHP.hasError('required')">This field is required.</mat-error>
               </mat-form-field>
             </div>
             <div class="pad">

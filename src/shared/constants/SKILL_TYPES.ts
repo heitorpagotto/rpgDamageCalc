@@ -1,5 +1,5 @@
 export const SKILL_TYPES = [
-  { name: 'Físico', id: 1 },
-  { name: 'Físico com Base no HP', id: 2 },
-  { name: 'Magico', id: 3 },
+  { name: 'Physical', id: 1 },
+  { name: 'Physical HP Based', id: 2 },
+  { name: 'Magic', id: 3 },
 ];

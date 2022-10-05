@@ -12,4 +12,5 @@ export const SKILL_ELEMENT_TYPES = [
   { id: 10, name: 'Almighty' },
   { id: 11, name: 'Support' },
   { id: 12, name: 'Passive' },
+  { id: 13, name: 'Healing' },
 ];
