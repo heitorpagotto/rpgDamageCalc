@@ -93,7 +93,8 @@
     Refresh Demon List
   </button>
 </div>
-<div class="p-1" *ngIf="selectedMember && !attackResult">
+<div class="p-1"
+  *ngIf="selectedMember && !attackResult || selectedMember && !attackResults || selectedMember && attackResults && attackResults?.length === 0">
   <div class="flex-container">
     <button mat-icon-button (click)="returnToDemonList()">
       <mat-icon>arrow_back</mat-icon>
@@ -231,4 +232,17 @@
     </p>
   </div>
   <button mat-raised-button color="accent" (click)="returnToDemonList()">OK</button>
+</div>
+<div class="text-center" *ngIf="attackResults && attackResults.length > 0">
+  <div class="attack-results" *ngFor="let results of attackResults">
+    <p class="damage">
+      {{results.attackStatus}}
+    </p>
+    <p *ngIf="results.isCritical" class="critical">CRITICAL</p>
+    <p *ngIf="results.weakness" class="weak">WEAK</p>
+    <p class="missed-attack" *ngIf="results.missAttack">
+      MISS
+    </p>
+  </div>
+  <button mat-raised-button color="accent" (click)="returnToDemonList(); attackResults = []">OK</button>
 </div>

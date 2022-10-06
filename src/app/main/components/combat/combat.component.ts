@@ -101,6 +101,7 @@ export class CombatComponent implements OnInit {
   }
 
   public attack(): void {
+    this.attackResults = [];
     if (this.combatDamageForm.valid && this.selectedSkill[0]) {
       if (this.selectedSkill[0].skillElement === EElementTypes.Healing) {
         // CALL MEMBER NAME MODAL
@@ -114,7 +115,6 @@ export class CombatComponent implements OnInit {
         });
 
         const fullValue = this.combatDamageForm.value as PhysicalAttackRequest;
-
         if (fullValue.skill === null || fullValue.skill === undefined) {
           this._snackBar.open('Select a skill.');
         } else {
