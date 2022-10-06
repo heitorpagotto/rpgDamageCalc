@@ -1,10 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  UntypedFormControl,
-  UntypedFormGroup,
-} from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSelectionList } from '@angular/material/list';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -40,7 +35,7 @@ export class CombatComponent implements OnInit {
   public buffs = BUFFS;
   public debuffs = DEBUFFS;
 
-  public combatDamageForm: UntypedFormGroup;
+  public combatDamageForm: FormGroup;
 
   @ViewChild('skills') skills: MatSelectionList;
 
@@ -107,29 +102,34 @@ export class CombatComponent implements OnInit {
 
   public attack(): void {
     if (this.combatDamageForm.valid && this.selectedSkill[0]) {
-      this.combatDamageForm.patchValue({
-        player: this.selectedMember,
-        skill: this.selectedSkill[0],
-        buffs: this.getSelectedBuffs(),
-        debuffs: this.getSelectedDeBuffs(),
-      });
-
-      const fullValue = this.combatDamageForm.value as PhysicalAttackRequest;
-
-      if (fullValue.skill === null || fullValue.skill === undefined) {
-        this._snackBar.open('Select a skill.');
+      if (this.selectedSkill[0].skillElement === EElementTypes.Healing) {
+        // CALL MEMBER NAME MODAL
+        // CALL SERVICE
       } else {
-        if (fullValue.isMultiple) {
-          for (let i = 0; i < fullValue.enemyQuantity; i++) {
-            this.attackResults?.push(this.attackService.attack(fullValue));
-          }
+        this.combatDamageForm.patchValue({
+          player: this.selectedMember,
+          skill: this.selectedSkill[0],
+          buffs: this.getSelectedBuffs(),
+          debuffs: this.getSelectedDeBuffs(),
+        });
+
+        const fullValue = this.combatDamageForm.value as PhysicalAttackRequest;
+
+        if (fullValue.skill === null || fullValue.skill === undefined) {
+          this._snackBar.open('Select a skill.');
         } else {
-          this.attackResult = this.attackService.attack(fullValue);
+          if (fullValue.isMultiple) {
+            for (let i = 0; i < fullValue.enemyQuantity; i++) {
+              this.attackResults?.push(this.attackService.attack(fullValue));
+            }
+          } else {
+            this.attackResult = this.attackService.attack(fullValue);
+          }
+          if (this.selectedSkill[0].skillElement === EElementTypes.Support) {
+            this.returnToDemonList();
+          }
+          this.selectedSkill = [];
         }
-        if (this.selectedSkill[0].skillElement === EElementTypes.Support) {
-          this.returnToDemonList();
-        }
-        this.selectedSkill = [];
       }
     } else {
       this.combatDamageForm.markAllAsTouched();

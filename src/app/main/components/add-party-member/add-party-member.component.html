@@ -113,7 +113,7 @@
           <span class="skill_name">{{skill.name}}</span>
           <span>{{skill.description}}</span>
           <span>{{skill.skillElement | enumConversion }}</span>
-          <ng-container *ngIf="!skill.description.includes('Regular attack')">
+          <ng-container *ngIf="!skill.description.includes('Regular attack') && skill.skillElement !== 12">
             <span class="flex-container align-items-center">
               {{skill.cost}}
               <span class="cost_type {{skill.skillType === 3 ? 'mp_type' : 'hp_type'}}">

@@ -47,6 +47,10 @@ export class DamageService {
 
     let formula = ((level + playerStat) * skillPower) / 15 + diceroll;
 
+    if (request.player.skills.find((x) => x.passiveSkill?.effects.boostDmg)) {
+      formula = this.calcBoostDamages(formula);
+    }
+
     if (request.isWeakness) {
       formula = this.calcWeaknessDamage(formula);
     }
@@ -164,5 +168,13 @@ export class DamageService {
 
   private calcWeaknessDamage(formula: number): number {
     return formula * 1.5;
+  }
+
+  private calcBoostDamages(damage: number): number {
+    let currentDamage = damage;
+
+    currentDamage += damage * 1.5;
+
+    return currentDamage;
   }
 }

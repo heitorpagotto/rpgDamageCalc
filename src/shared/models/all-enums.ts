@@ -18,4 +18,5 @@ export enum EElementTypes {
   Almighty,
   Support,
   Passive,
+  Healing,
 }

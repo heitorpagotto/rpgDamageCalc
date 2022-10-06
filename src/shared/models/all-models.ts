@@ -33,19 +33,20 @@ export class Skill {
   skillType: ESkillTypes;
   skillElement: EElementTypes;
   skillPower: number;
+  passiveSkillId?: number;
   passiveSkill?: PassiveSkill;
+  healingSkillId?: number;
+  healingSkill?: HealingSkill;
 }
 
 export class PassiveSkill {
+  id?: number;
   name: string;
   description: string;
   effects: {
     isMultiple?: boolean;
     showDarkmightOptions?: boolean;
-    boostFireDmg?: boolean;
-    boostElecDmg?: boolean;
-    boostIceDmg?: boolean;
-    boostForceDmg?: boolean;
+    boostDmg?: boolean;
     increaseMaxPercentHP?: number;
     increaseMaxPercentMP?: number;
     increaseCriticalAttacksBy?: number;
@@ -53,8 +54,13 @@ export class PassiveSkill {
 }
 
 export class HealingSkill {
+  id?: number;
   name: string;
-  healingPercent: string;
+  description: string;
+  cost: number;
+  healingPercent: number;
+  diceRollLevel: number;
+  isForAllMembers?: boolean;
 }
 
 export class ModalSkillEdit {

@@ -3,39 +3,6 @@
   <div mat-dialog-content>
     <div class="content_row">
       <mat-form-field color="accent" appearance="outline">
-        <mat-label>Skill Name</mat-label>
-        <input matInput type="text" formControlName="name">
-        <mat-error>This field is Required</mat-error>
-      </mat-form-field>
-    </div>
-    <div class="content_row">
-      <mat-form-field color="accent" appearance="outline">
-        <mat-label>Skill Description</mat-label>
-        <input matInput type="text" formControlName="description">
-        <mat-error>This field is Required</mat-error>
-      </mat-form-field>
-    </div>
-    <div class="content_row">
-      <mat-form-field color="accent" appearance="outline">
-        <mat-label>Skill Cost</mat-label>
-        <input matInput type="number" formControlName="cost">
-        <mat-error>This field is Required</mat-error>
-      </mat-form-field>
-      <mat-form-field color="accent" appearance="outline">
-        <mat-label>Skill Power</mat-label>
-        <input matInput type="number" formControlName="skillPower">
-        <mat-error>This field is Required</mat-error>
-      </mat-form-field>
-      <mat-form-field color="accent" appearance="outline">
-        <mat-label>Skill Level</mat-label>
-        <mat-select formControlName="diceRollLevel">
-          <mat-option *ngFor="let level of skillLevels" [value]="level.id">{{level.name}}</mat-option>
-        </mat-select>
-        <mat-error>This field is Required</mat-error>
-      </mat-form-field>
-    </div>
-    <div class="content_row">
-      <mat-form-field color="accent" appearance="outline">
         <mat-label>Skill Type</mat-label>
         <mat-select formControlName="skillType">
           <mat-option *ngFor="let types of skillTypes " [value]="types.id">
@@ -46,7 +13,7 @@
       </mat-form-field>
       <mat-form-field color="accent" appearance="outline">
         <mat-label>Skill Element</mat-label>
-        <mat-select formControlName="skillElement">
+        <mat-select formControlName="skillElement" (valueChange)="controlFormValidators($event)">
           <mat-option *ngFor="let elements of elementTypes " [value]="elements.id">
             {{elements.name}}
           </mat-option>
@@ -54,6 +21,59 @@
         <mat-error>This field is Required</mat-error>
       </mat-form-field>
     </div>
+    <div class="content_row" *ngIf="shouldShowOnlyPassive || shouldShowOnlyHealing">
+      <mat-form-field *ngIf="shouldShowOnlyPassive && !shouldShowOnlyHealing" color="accent" appearance="outline">
+        <mat-label>Passive Skill</mat-label>
+        <mat-select formControlName="passiveSkillId">
+          <mat-option *ngFor="let passive of passiveSkills" [value]="passive.id">
+            {{passive.name}} - {{passive.description}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="shouldShowOnlyHealing && !shouldShowOnlyPassive" color="accent" appearance="outline">
+        <mat-label>Healing Skill</mat-label>
+        <mat-select formControlName="healingSkillId">
+          <mat-option *ngFor="let healing of healingSkills" [value]="healing.id">
+            {{healing.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <ng-container *ngIf="!shouldShowOnlyPassive && !shouldShowOnlyHealing">
+      <div class="content_row">
+        <mat-form-field color="accent" appearance="outline">
+          <mat-label>Skill Name</mat-label>
+          <input matInput type="text" formControlName="name">
+          <mat-error>This field is Required</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="content_row">
+        <mat-form-field color="accent" appearance="outline">
+          <mat-label>Skill Description</mat-label>
+          <input matInput type="text" formControlName="description">
+          <mat-error>This field is Required</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="content_row">
+        <mat-form-field color="accent" appearance="outline">
+          <mat-label>Skill Cost</mat-label>
+          <input matInput type="number" formControlName="cost">
+          <mat-error>This field is Required</mat-error>
+        </mat-form-field>
+        <mat-form-field color="accent" appearance="outline">
+          <mat-label>Skill Power</mat-label>
+          <input matInput type="number" formControlName="skillPower">
+          <mat-error>This field is Required</mat-error>
+        </mat-form-field>
+        <mat-form-field color="accent" appearance="outline">
+          <mat-label>Skill Level</mat-label>
+          <mat-select formControlName="diceRollLevel">
+            <mat-option *ngFor="let level of skillLevels" [value]="level.id">{{level.name}}</mat-option>
+          </mat-select>
+          <mat-error>This field is Required</mat-error>
+        </mat-form-field>
+      </div>
+    </ng-container>
   </div>
   <div mat-dialog-actions [align]="'end'">
     <button type="button" mat-flat-button (click)="close()">Close</button>
