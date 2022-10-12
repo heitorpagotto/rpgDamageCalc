@@ -72,7 +72,7 @@
       </div>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-flat-button style="width: 100%" (click)="openXPModal(party)">
+      <button [disabled]="party.level >= 256" mat-flat-button style="width: 100%" (click)="openXPModal(party)">
         <mat-icon>add</mat-icon>
         Add EXP
       </button>

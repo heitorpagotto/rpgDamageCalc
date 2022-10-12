@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AttackService } from 'src/app/services/attack.service';
 import { DemonServiceService } from 'src/app/services/demon-service.service';
+import { PartyHealService } from 'src/app/services/party-heal.service';
 import { BUFFS } from 'src/shared/constants/BUFFS';
 import { DEBUFFS } from 'src/shared/constants/DEBUFFS';
 import { EElementTypes, ESkillTypes } from 'src/shared/models/all-enums';
@@ -44,6 +45,7 @@ export class CombatComponent implements OnInit {
     private attackService: AttackService,
     private _snackBar: MatSnackBar,
     private _modal: MatDialog,
+    private _partyHealService: PartyHealService,
     private _router: Router
   ) {}
 
@@ -104,8 +106,14 @@ export class CombatComponent implements OnInit {
     this.attackResults = [];
     if (this.combatDamageForm.valid && this.selectedSkill[0]) {
       if (this.selectedSkill[0].skillElement === EElementTypes.Healing) {
-        // CALL MEMBER NAME MODAL
-        // CALL SERVICE
+        if (!this.selectedSkill[0].healingSkill?.isForAllMembers) {
+          // CALL MEMBER NAME MODAL
+        } else {
+          this._partyHealService.HealMember(
+            this.selectedMember!,
+            this.selectedSkill[0].healingSkill
+          );
+        }
       } else {
         this.combatDamageForm.patchValue({
           player: this.selectedMember,

@@ -20,6 +20,8 @@ export class ManagePartyMemberXpComponent implements OnInit {
 
   public previousStats: DemonStats;
 
+  public allStatsMaxed: boolean;
+
   public get progressBarValue() {
     return (this.data.currentEXP * 100) / this.data.totalEXP;
   }
@@ -44,21 +46,45 @@ export class ManagePartyMemberXpComponent implements OnInit {
   }
 
   public AddEXP(): void {
-    const summedXP = this.data.currentEXP + this.experienceNumber;
-    if (summedXP < this.data.totalEXP) {
-      this.data.currentEXP = summedXP;
-      this._dialogRef.close();
-    } else {
-      while (summedXP >= this.data.totalEXP) {
-        let expDifference = summedXP - this.data.totalEXP;
-        this.shouldShowLevelUp = true;
-        this.data.level++;
-        this.statNumber++;
+    if (this.data.level < 256) {
+      const summedXP = this.data.currentEXP + this.experienceNumber;
+      if (summedXP < this.data.totalEXP) {
+        this.data.currentEXP = summedXP;
+        this._dialogRef.close();
+      } else {
+        while (summedXP >= this.data.totalEXP) {
+          if (this.data.level < 256) {
+            let expDifference = summedXP - this.data.totalEXP;
+            this.shouldShowLevelUp = true;
+            this.data.level++;
+            this.statNumber++;
 
-        this.data.currentEXP = 0;
-        this.data.totalEXP = Math.round(this.data.totalEXP * 1.5);
-        if (expDifference >= 0) {
-          this.data.currentEXP = expDifference;
+            this.data.currentEXP = 0;
+
+            if (this.data.level < 25) {
+              this.data.totalEXP = Math.round(this.data.totalEXP * 1.5);
+            } else if (this.data.level >= 25 && this.data.level < 50) {
+              this.data.totalEXP = Math.round(this.data.totalEXP * 1.25);
+            } else if (this.data.level >= 50) {
+              this.data.totalEXP = Math.round(this.data.totalEXP * 1.15);
+            }
+
+            if (expDifference >= 0) {
+              this.data.currentEXP = expDifference;
+            }
+          }
+        }
+        if (
+          this.previousStats.ST === 40 &&
+          this.previousStats.MA === 40 &&
+          this.previousStats.EN === 40 &&
+          this.previousStats.AG === 40 &&
+          this.previousStats.LU === 40
+        ) {
+          this.allStatsMaxed = true;
+          this.statNumber = 0;
+        } else {
+          this.allStatsMaxed = false;
         }
       }
     }
@@ -102,6 +128,18 @@ export class ManagePartyMemberXpComponent implements OnInit {
       case 'LU':
         this.previousStats.LU = statValue;
         break;
+    }
+    if (
+      this.previousStats.ST === 40 &&
+      this.previousStats.MA === 40 &&
+      this.previousStats.EN === 40 &&
+      this.previousStats.AG === 40 &&
+      this.previousStats.LU === 40
+    ) {
+      this.allStatsMaxed = true;
+      this.statNumber = 0;
+    } else {
+      this.allStatsMaxed = false;
     }
   }
 

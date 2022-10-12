@@ -16,8 +16,6 @@ export class StatCounterComponent implements OnInit {
   public disableAddButton: boolean;
 
   get shoudDisableRemoveButton(): boolean {
-    console.log(this.currentStat, 'current');
-    console.log(this.statValue, 'input');
     return this.statValue === this.currentStat;
   }
 
